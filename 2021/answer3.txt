@@ -1,0 +1,2 @@
+I had to do something I almost never have to do in J: use traditional
+flow control.  I'm reworking it now to use recursion instead.

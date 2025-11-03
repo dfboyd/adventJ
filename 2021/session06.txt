@@ -1,0 +1,378 @@
+   
+simulate =: 3 : 0
+  newfish =: +/ 0 = y
+  (y - 1) , newfish $ 8
+)
+
+
+            
+   simulate 3 4 3 1 2
+2 3 2 0 1
+   simulate simulate 3 4 3 1 2
+1 2 1 _1 0 8
+   s =: simulate simulate 3 4 3 1 2
+   s
+1 2 1 _1 0 8
+   s = _1
+0 0 0 1 0 0
+   s i. _1
+3
+   s =: 1 3 _1 3 _1 2
+   s
+1 3 _1 3 _1 2
+   s i. _1
+2
+   s I. _1
+|domain error
+|   s     I._1
+   _1 i. s
+1 1 0 1 0 1
+   _1 I. s
+1 1 0 1 0 1
+   s
+1 3 _1 3 _1 2
+   7 + _1 = s
+7 7 8 7 8 7
+   _1 = s
+0 0 1 0 1 0
+   7 * _1 = s
+0 0 7 0 7 0
+   s + (7 * _1 = s)
+1 3 6 3 6 2
+   s
+1 3 _1 3 _1 2
+   s =: 1 2 1 _1 0 8
+
+      s + (7 * _1 = s)
+1 2 1 6 0 8
+   
+simulate =: 3 : 0
+  state =. y
+  newfish =: +/ 0 = state
+  state + (7 * _1 = state - 1)
+)
+
+
+            
+   t =: 3 4 3 1 2
+   simulate t
+3 4 3 1 2
+   t
+3 4 3 1 2
+   
+simulate =: 3 : 0
+  state =. y
+  newfish =: +/ 0 = state
+  ((state - 1) + (7 * _1 = state - 1)), newfish $ 8
+)
+
+
+            
+   t
+3 4 3 1 2
+   simulate t
+2 3 2 0 1
+   simulate simulate t
+1 2 1 6 0 8
+   simulate simulate simulate t
+0 1 0 5 6 7 8
+   simulate simulate simulate simulate t
+6 0 6 4 5 6 7 8 8
+   simulate^:18 t
+6 0 6 4 5 6 0 1 1 2 6 0 1 1 1 2 2 3 3 4 6 7 8 8 8 8
+   $ simulate^:18 t
+26
+   $ simulate^:80 t
+5934
+   
+readfile =: 1!:1
+
+         
+i =: readfile < jpath '~/Downloads/input-2021-06.txt'
+
+         $ i
+600
+   
+eliminatecommas =: 3 : 0
+  ' ' ((',' = y) # (i. # y)) } y
+)
+
+
+            eliminatecommas i
+3 5 4 1 2 1 5 5 1 1 1 1 4 1 4 5 4 5 1 3 1 1 1 4 1 1 3 1 1 5 3 1 1 3 1 3 1 1 1 4 1 2 5 3 1 4 2 3 1 1 2 1 1 1 4 1 1 1 1 2 1 1 1 3 1 1 4 1 4 1 5 1 4 2 1 1 5 4 4 4 1 4 1 1 1 1 3 1 5 1 4 5 3 1 4 1 5 2 2 5 1 3 2 2 5 4 2 3 4 1 2 1 1 2 1 1 5 4 1 1 1 1 3 1 5 4 1 5 ...
+
+   ". eliminatecommas i
+|spelling error
+|   3 5 4 1 2 1 5 5 1 1 1 1 4 1 4 5 4 5 1 3 1 1 1 4 1 1 3 1 1 5 3 1 1 3 1 3 1 1 1 4 1 2 5 3 1 4 2 3 1 1 2 1 1 1 4 1 1 1 1 2 1 1 1 3 1 1 4 1 4 1 5 1 4 2 1 1 5 4 4 4 1 4 1 1 1 1 3 1 5 1 4 5 3 1 4 1 5 2 2 5 1 3 2 2 5 4 2 3 4 1 2 1 1 2 1 1 5 4 1 1 1 1 3 1 5 4 1 5 1 1 4 3 4 3 1 5 1 1 2 1 1 5 3 1 1 1 1 1 5 1 1 1 1 1 1 1 2 2 5 5 1 2 1 2 1 1 5 1 3 1 5 2 1 4 1 5 3 1 1 1 2 1 3 1 4 4 1 1 5 1 1 4 1 4 2 3 5 2 5 1 3 1 2 1 4 1 1 1 1 2 1 4 1 3 4 1 1 1 1 1 1 1 2 1 5 1 1 1 1 2 3 1 1 2 3 1 1 3 1 1 3 1 3 1 3 3 1 1 2 1 3 2 3 1 1 3 5 1 1 5 5 1 2 1 2 2 1 1 1 5 3 1 1 3 5 1 3 1 5 3 4 2 3 2 1 3 1 1 3 4 2 1 1 3 1 1 1 1 1 1
+
+|                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          ^
+|       ".eliminatecommas i
+   ": eliminatecommas i
+3 5 4 1 2 1 5 5 1 1 1 1 4 1 4 5 4 5 1 3 1 1 1 4 1 1 3 1 1 5 3 1 1 3 1 3 1 1 1 4 1 2 5 3 1 4 2 3 1 1 2 1 1 1 4 1 1 1 1 2 1 1 1 3 1 1 4 1 4 1 5 1 4 2 1 1 5 4 4 4 1 4 1 1 1 1 3 1 5 1 4 5 3 1 4 1 5 2 2 5 1 3 2 2 5 4 2 3 4 1 2 1 1 2 1 1 5 4 1 1 1 1 3 1 5 4 1 5 ...
+
+   $ ": eliminatecommas i
+600
+   60 10 $  ": eliminatecommas i
+3 5 4 1 2 
+1 5 5 1 1 
+1 1 4 1 4 
+5 4 5 1 3 
+1 1 1 4 1 
+1 3 1 1 5 
+3 1 1 3 1 
+3 1 1 1 4 
+1 2 5 3 1 
+4 2 3 1 1 
+2 1 1 1 4 
+1 1 1 1 2 
+1 1 1 3 1 
+1 4 1 4 1 
+5 1 4 2 1 
+1 5 4 4 4 
+1 4 1 1 1 
+1 3 1 5 1 
+4 5 3 1 4 
+1 5 2 2 5 
+1 3 2 2 5 
+4 2 3 4 1 
+2 1 1 2 1 
+1 5 4 1 1 
+1 1 3 1 5 
+4 1 5 1 1 
+4 3 4 3 1 
+5 1 1 2 1 
+1 5 3 1 1 
+1 1 1 5 1 
+1 1 1 1 1 
+1 2 2 5 5 
+1 2 1 2 1 
+1 5 1 3 1 
+5 2 1 4 1 
+5 3 1 1 1 
+2 1 3 1 4 
+4 1 1 5 1 
+1 4 1 4 2 
+3 5 2 5 1 
+3 1 2 1 4 
+1 1 1 1 2 
+1 4 1 3 4 
+1 1 1 1 1 
+1 1 2 1 5 
+1 1 1 1 2 
+3 1 1 2 3 
+1 1 3 1 1 
+3 1 3 1 3 
+3 1 1 2 1 
+3 2 3 1 1 
+3 5 1 1 5 
+5 1 2 1 2 
+2 1 1 1 5 
+3 1 1 3 5 
+1 3 1 5 3 
+4 2 3 2 1 
+3 1 1 3 4 
+2 1 1 3 1 
+1 1 1 1 1
+
+   60 10 $ ". eliminatecommas i
+|spelling error
+|   3 5 4 1 2 1 5 5 1 1 1 1 4 1 4 5 4 5 1 3 1 1 1 4 1 1 3 1 1 5 3 1 1 3 1 3 1 1 1 4 1 2 5 3 1 4 2 3 1 1 2 1 1 1 4 1 1 1 1 2 1 1 1 3 1 1 4 1 4 1 5 1 4 2 1 1 5 4 4 4 1 4 1 1 1 1 3 1 5 1 4 5 3 1 4 1 5 2 2 5 1 3 2 2 5 4 2 3 4 1 2 1 1 2 1 1 5 4 1 1 1 1 3 1 5 4 1 5 1 1 4 3 4 3 1 5 1 1 2 1 1 5 3 1 1 1 1 1 5 1 1 1 1 1 1 1 2 2 5 5 1 2 1 2 1 1 5 1 3 1 5 2 1 4 1 5 3 1 1 1 2 1 3 1 4 4 1 1 5 1 1 4 1 4 2 3 5 2 5 1 3 1 2 1 4 1 1 1 1 2 1 4 1 3 4 1 1 1 1 1 1 1 2 1 5 1 1 1 1 2 3 1 1 2 3 1 1 3 1 1 3 1 3 1 3 3 1 1 2 1 3 2 3 1 1 3 5 1 1 5 5 1 2 1 2 2 1 1 1 5 3 1 1 3 5 1 3 1 5 3 4 2 3 2 1 3 1 1 3 4 2 1 1 3 1 1 1 1 1 1
+
+|                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          ^
+|   60 10$    ".eliminatecommas i
+   eliminatecommas i
+3 5 4 1 2 1 5 5 1 1 1 1 4 1 4 5 4 5 1 3 1 1 1 4 1 1 3 1 1 5 3 1 1 3 1 3 1 1 1 4 1 2 5 3 1 4 2 3 1 1 2 1 1 1 4 1 1 1 1 2 1 1 1 3 1 1 4 1 4 1 5 1 4 2 1 1 5 4 4 4 1 4 1 1 1 1 3 1 5 1 4 5 3 1 4 1 5 2 2 5 1 3 2 2 5 4 2 3 4 1 2 1 1 2 1 1 5 4 1 1 1 1 3 1 5 4 1 5 ...
+
+   ". eliminatecommas i
+|spelling error
+|   3 5 4 1 2 1 5 5 1 1 1 1 4 1 4 5 4 5 1 3 1 1 1 4 1 1 3 1 1 5 3 1 1 3 1 3 1 1 1 4 1 2 5 3 1 4 2 3 1 1 2 1 1 1 4 1 1 1 1 2 1 1 1 3 1 1 4 1 4 1 5 1 4 2 1 1 5 4 4 4 1 4 1 1 1 1 3 1 5 1 4 5 3 1 4 1 5 2 2 5 1 3 2 2 5 4 2 3 4 1 2 1 1 2 1 1 5 4 1 1 1 1 3 1 5 4 1 5 1 1 4 3 4 3 1 5 1 1 2 1 1 5 3 1 1 1 1 1 5 1 1 1 1 1 1 1 2 2 5 5 1 2 1 2 1 1 5 1 3 1 5 2 1 4 1 5 3 1 1 1 2 1 3 1 4 4 1 1 5 1 1 4 1 4 2 3 5 2 5 1 3 1 2 1 4 1 1 1 1 2 1 4 1 3 4 1 1 1 1 1 1 1 2 1 5 1 1 1 1 2 3 1 1 2 3 1 1 3 1 1 3 1 3 1 3 3 1 1 2 1 3 2 3 1 1 3 5 1 1 5 5 1 2 1 2 2 1 1 1 5 3 1 1 3 5 1 3 1 5 3 4 2 3 2 1 3 1 1 3 4 2 1 1 3 1 1 1 1 1 1
+
+|                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          ^
+|       ".eliminatecommas i
+   ". , eliminatecommas i
+|spelling error
+|   3 5 4 1 2 1 5 5 1 1 1 1 4 1 4 5 4 5 1 3 1 1 1 4 1 1 3 1 1 5 3 1 1 3 1 3 1 1 1 4 1 2 5 3 1 4 2 3 1 1 2 1 1 1 4 1 1 1 1 2 1 1 1 3 1 1 4 1 4 1 5 1 4 2 1 1 5 4 4 4 1 4 1 1 1 1 3 1 5 1 4 5 3 1 4 1 5 2 2 5 1 3 2 2 5 4 2 3 4 1 2 1 1 2 1 1 5 4 1 1 1 1 3 1 5 4 1 5 1 1 4 3 4 3 1 5 1 1 2 1 1 5 3 1 1 1 1 1 5 1 1 1 1 1 1 1 2 2 5 5 1 2 1 2 1 1 5 1 3 1 5 2 1 4 1 5 3 1 1 1 2 1 3 1 4 4 1 1 5 1 1 4 1 4 2 3 5 2 5 1 3 1 2 1 4 1 1 1 1 2 1 4 1 3 4 1 1 1 1 1 1 1 2 1 5 1 1 1 1 2 3 1 1 2 3 1 1 3 1 1 3 1 3 1 3 3 1 1 2 1 3 2 3 1 1 3 5 1 1 5 5 1 2 1 2 2 1 1 1 5 3 1 1 3 5 1 3 1 5 3 4 2 3 2 1 3 1 1 3 4 2 1 1 3 1 1 1 1 1 1
+
+|                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          ^
+|       ".,eliminatecommas i
+   , eliminatecommas i
+3 5 4 1 2 1 5 5 1 1 1 1 4 1 4 5 4 5 1 3 1 1 1 4 1 1 3 1 1 5 3 1 1 3 1 3 1 1 1 4 1 2 5 3 1 4 2 3 1 1 2 1 1 1 4 1 1 1 1 2 1 1 1 3 1 1 4 1 4 1 5 1 4 2 1 1 5 4 4 4 1 4 1 1 1 1 3 1 5 1 4 5 3 1 4 1 5 2 2 5 1 3 2 2 5 4 2 3 4 1 2 1 1 2 1 1 5 4 1 1 1 1 3 1 5 4 1 5 ...
+
+   $ , eliminatecommas i
+600
+   t
+3 4 3 1 2
+   
+eliminateLF =: 3 : 0
+  ' ' ((LF = y) # (i. # y)) } y
+)
+
+
+
+               eliminateLF eliminatecommas i
+3 5 4 1 2 1 5 5 1 1 1 1 4 1 4 5 4 5 1 3 1 1 1 4 1 1 3 1 1 5 3 1 1 3 1 3 1 1 1 4 1 2 5 3 1 4 2 3 1 1 2 1 1 1 4 1 1 1 1 2 1 1 1 3 1 1 4 1 4 1 5 1 4 2 1 1 5 4 4 4 1 4 1 1 1 1 3 1 5 1 4 5 3 1 4 1 5 2 2 5 1 3 2 2 5 4 2 3 4 1 2 1 1 2 1 1 5 4 1 1 1 1 3 1 5 4 1 5 ...
+   $ eliminateLF eliminatecommas i
+600
+   ". $ eliminateLF eliminatecommas i
+|domain error
+|       ".$eliminateLF eliminatecommas i
+   ": eliminateLF eliminatecommas i
+3 5 4 1 2 1 5 5 1 1 1 1 4 1 4 5 4 5 1 3 1 1 1 4 1 1 3 1 1 5 3 1 1 3 1 3 1 1 1 4 1 2 5 3 1 4 2 3 1 1 2 1 1 1 4 1 1 1 1 2 1 1 1 3 1 1 4 1 4 1 5 1 4 2 1 1 5 4 4 4 1 4 1 1 1 1 3 1 5 1 4 5 3 1 4 1 5 2 2 5 1 3 2 2 5 4 2 3 4 1 2 1 1 2 1 1 5 4 1 1 1 1 3 1 5 4 1 5 ...
+   $ ": eliminateLF eliminatecommas i
+600
+   10 {  ": eliminateLF eliminatecommas i
+1
+   10 {.  ": eliminateLF eliminatecommas i
+3 5 4 1 2 
+   10 {.  ". eliminateLF eliminatecommas i
+3 5 4 1 2 1 5 5 1 1
+   ". eliminateLF eliminatecommas i
+3 5 4 1 2 1 5 5 1 1 1 1 4 1 4 5 4 5 1 3 1 1 1 4 1 1 3 1 1 5 3 1 1 3 1 3 1 1 1 4 1 2 5 3 1 4 2 3 1 1 2 1 1 1 4 1 1 1 1 2 1 1 1 3 1 1 4 1 4 1 5 1 4 2 1 1 5 4 4 4 1 4 1 1 1 1 3 1 5 1 4 5 3 1 4 1 5 2 2 5 1 3 2 2 5 4 2 3 4 1 2 1 1 2 1 1 5 4 1 1 1 1 3 1 5 4 1 5 ...
+   $ ". eliminateLF eliminatecommas i
+300
+   it =: ". eliminateLF eliminatecommas i
+   $ simulate^:80 it
+374927
+   $ simulate^:256 it
+  C-c C-c^C
+|attention interrupt
+|   $    simulate^:256 it
+      (i. 8) I. 1 1 2 2 3 3 3 3 4
+1 1 2 2 3 3 3 3 4
+   (i. 8) i. 1 1 2 2 3 3 3 3 4
+1 1 2 2 3 3 3 3 4
+   (i. 8) =/ 1 1 2 2 3 3 3 3 4
+0 0 0 0 0 0 0 0 0
+1 1 0 0 0 0 0 0 0
+0 0 1 1 0 0 0 0 0
+0 0 0 0 1 1 1 1 0
+0 0 0 0 0 0 0 0 1
+0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0
+   +/"1 (i. 8) =/ 1 1 2 2 3 3 3 3 4
+0 2 2 4 1 0 0 0
+   
+init =: 3 : 0
+  +/"1 (i. 8) =/ y
+)
+
+
+            init t
+0 1 1 2 1 0 0 0
+   init i
+0 0 0 0 0 0 0 0
+   init it
+0 156 35 41 33 35 0 0
+   init 1 2 1 6 0 1 2 3 3 4 1 2 3 3 3 4 4 5 5 6 8
+1 4 3 5 3 2 2 0
+   
+init =: 3 : 0
+  NB. collect counts of each value
+  +/"1 (i. 9) =/ y
+)
+
+
+            
+   init 1 2 1 6 0 1 2 3 3 4 1 2 3 3 3 4 4 5 5 6 8
+1 4 3 5 3 2 2 0 1
+   init t
+0 1 1 2 1 0 0 0 0
+   
+simulate2 =: 3 : 0
+  eights =: 1 {. y
+  new =: 1 }. y
+  new , eights
+)
+
+
+            simulate2 init t
+1 1 2 1 0 0 0 0 0
+   simulate2^:2 init t
+1 2 1 0 0 0 0 0 1
+   simulate2^:3 init t
+2 1 0 0 0 0 0 1 1
+   simulate2^:4 init t
+1 0 0 0 0 0 1 1 2
+   
+simulate2 =: 3 : 0
+  zeroes =: 1 {. y
+  NB. current zeroes spawn eights
+
+  new =: (((1 }. y), 0) + 0 0 0 0 0, zeroes, 0, zeroes
+  NB. chop the 0 off the bottom and everyone else drops one
+  NB. then add a zero to the top
+  NB. then add the current zeroes to position 6 (mothers)
+  NB. and to position 8 (babies)
+)
+
+
+            
+   simulate2 init t
+|length error: simulate2
+|   new=:(((1}.y),0)    +0 0 0 0 0,zeroes,0,zeroes
+   1 }. 2 3 4
+3 4
+   (1 }. 2 3 4), 0
+3 4 0
+   $ init t
+9
+   
+simulate2 =: 3 : 0
+  zeroes =: 0 { y
+  NB. current zeroes spawn eights
+
+  new =: (((1 }. y), 0) + 0 0 0 0 0 0, zeroes, 0, zeroes
+  NB. chop the 0 off the bottom and everyone else drops one
+  NB. then add a zero to the top
+  NB. then add the current zeroes to position 6 (mothers)
+  NB. and to position 8 (babies)
+)
+
+
+            
+   $ init t
+9
+   simulate2 init t
+|syntax error: simulate2
+|   new=:(((1}.y),0)+0 0 0 0 0 0,zeroes,0,zeroes
+   z =: 4
+   0 0 0 0 0 , z , 0 , z
+0 0 0 0 0 4 0 4
+   $ 0 0 0 0 0 , z , 0 , z
+8
+   
+simulate2 =: 3 : 0
+  zeroes =: 0 { y
+  NB. current zeroes spawn eights
+
+  new =: ((1 }. y), 0) + 0 0 0 0 0 0, zeroes, 0, zeroes
+  NB. chop the 0 off the bottom and everyone else drops one
+  NB. then add a zero to the top
+  NB. then add the current zeroes to position 6 (mothers)
+  NB. and to position 8 (babies)
+)
+
+
+            
+   simulate2 init t
+1 1 2 1 0 0 0 0 0
+   simulate2^:2 init t
+1 2 1 0 0 0 1 0 1
+   simulate2^:3 init t
+2 1 0 0 0 1 1 1 1
+   simulate2^:80 init t
+424 729 558 790 739 762 991 370 571
+   +/ simulate2^:80 init t
+5934
+   +/ simulate2^:80 init it
+374927
+   +/ simulate2^:256 init it
+1687617803407
+   1687617803407
+1687617803407
+   1687617803407 % (1024 ^ 3)
+1571.72
+   1687617803407 % (1024 ^ 4)
+1.53488
+   

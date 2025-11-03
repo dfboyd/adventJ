@@ -1,0 +1,143 @@
+Our first goal here is to parse the ruleset into a matrix, like the
+ones you use for factorio production.
+
+Rules:
+
+    light red bags contain 1 bright white bag, 2 muted yellow bags.
+    dark orange bags contain 3 bright white bags, 4 muted yellow bags.
+    bright white bags contain 1 shiny gold bag.
+    muted yellow bags contain 2 shiny gold bags, 9 faded blue bags.
+    shiny gold bags contain 1 dark olive bag, 2 vibrant plum bags.
+    dark olive bags contain 3 faded blue bags, 4 dotted black bags.
+    vibrant plum bags contain 5 faded blue bags, 6 dotted black bags.
+    faded blue bags contain no other bags.
+    dotted black bags contain no other bags.
+
+Parse this to get a list of bag types, and we number them:
+
+     0  light red
+     1  dark orange
+     2  bright white
+     3  muted yellow
+     4  shiny gold
+     5  dark olive
+     6  vibrant plum
+     7  faded blue
+     8  dotted black
+
+Now I think we make a matrix.  The first rule:
+
+    light red bags contain 1 bright white bag, 2 muted yellow bags.
+
+    bag   0  1  2  3  4  5  6  7
+
+    rule  1  0 _1 _2  0  0  0  0
+
+...no, we need an adjacency matrix instead, because we're going to
+complete the graph downstream by taking powers of the matrix.
+
+    bag   0  1  2  3  4  5  6  7  8
+    0	  1  0  1  2  0  0  0  0  0
+    1     0  1  3  4  0  0  0  0  0
+    2     0  0  0  0  1  0  0  0  0
+    3     0  0  0  0  2  0  0  9  0
+    etc.
+
+----------------------------------------------------------------------
+
+I think it's a little iterative.  Let's get going with just the
+parsing part.
+
+Once we have the adjacency matrix, though, we can answer the question
+like this:
+
+We start by getting the row number for "shiny gold", which says which
+bags a shiny gold bag can contain.
+
+Then we take that column: those are all the bag types that can contain
+a shiny gold.
+
+Then we grab all those columns, and merge them as a set; those are all
+the bag types that can contain a bag that contains shiny gold.
+
+And we keep doing that until the set stops changing.
+
+----------------------------------------------------------------------
+
+re-learning: rxmatch returns an array of pairs
+
+the zeroth pair is the coordinates (start/stop) of the entire match of
+the regexp
+
+the oneth pair is the coords of the match of the first RE paren group
+
+----------------------------------------------------------------------
+
+re-learning:    DATA i. ITEM finds first occurrence of ITEM in DATA.
+i.e. the usual order would be 'grep X FILE' but this is J so it's
+easier to say "FILE grep X".
+
+----------------------------------------------------------------------
+
+Parsing the lines:
+
+take the part after "contains "
+
+split into words
+
+if the length is 3, it says "no other bags" so return zeroes
+
+if the length is a multiple of 4:
+reshape to 4 columns, drop the last column,
+paste the last two columns together with a space
+      turning e.g.  'shiny' 'blue' into 'shiny blue'
+look up the list of bags in bagnames, getting bag numbers
+
+   ,.  bagnames
++------------+
+|light red   |
++------------+
+|dark orange |
++------------+
+|bright white|
++------------+
+|muted yellow|
++------------+
+|shiny gold  |
++------------+
+|dark olive  |
++------------+
+|vibrant plum|
++------------+
+|faded blue  |
++------------+
+|dotted black|
++------------+
+   p
+dark orange bags contain 3 bright white bags, 4 muted yellow bags.
+
+dargk orange is 1
+bright white is 2
+muted uellow is 3
+
+there are 9 bag types
+  0 0 0 0 0 0 0 0 0
+
+so the row for p is row 1 of the final matrix:
+and its contents are
+
+  0 0 3 4 0 0 0 0 0 
+
+In fact at this stage we probably don't care about the numbers, but I
+bet part 2 will involve them so I will still parse them.
+
+Looking up in bagnames:
+
+   bagnames i. < 'shiny gold'
+4
+
+
+If the graph matrix is "gm", then I can just work with the nonzero
+elements:
+
+0 -: 

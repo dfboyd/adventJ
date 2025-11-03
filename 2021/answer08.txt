@@ -1,0 +1,17 @@
+readfile =: 1!:1
+load 'strings'
+load 'regex'
+load 'text'
+
+eliminatecommas =: 3 : 0
+  ' ' ((',' = y) # (i. # y)) } y
+)
+
+eliminateLF =: 3 : 0
+  ' ' ((LF = y) # (i. # y)) } y
+)
+
+clean =: 3 : 0
+". (', ', LF, ' ') charsub y
+)
+

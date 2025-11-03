@@ -1,0 +1,2112 @@
+   
+readfile =: 1!:1
+
+         
+t =: readfile < jpath '~/Downloads/test-2021-05.txt'
+
+         
+load 'strings'
+
+         
+load 'regex'
+
+         
+eliminateLF =: 3 : 0
+  ' ' ((LF = y) # (i. # y)) } y
+)
+
+amendboard =: 4 : 0
+  1 y } (x,x) $ 0
+)
+
+
+                  
+gchv =: 3 : 0
+  NB. "generate coords horizontal vertical"
+  NB.  i.e. generate coords for a line if it's horiz or vert
+  NB. given y = a b c d
+  NB. figure out if it's a vert or horiz line,
+  NB. and generate all the coords on the line
+
+  if. (0 { y) = (2 { y)   NB. y coords equal
+  do.
+     ly =: 0 { y
+     NB. ly is the line's y coord
+     'sx ex' =: /:~ 1 3 { y
+     cm =: ly ,. sx + i. 1 + ex - sx
+     _2 <\, cm
+  elseif. (1 { y) = (3 { y)   NB. x coords equal
+  do.
+     lx =: 1 { y
+     'sy ey' =: /:~ 0 2 { y
+     cm =: (sy + i. 1 + ey - sy) ,. lx
+     _2 <\, cm
+  end.
+)
+
+
+
+gchv =: 3 : 0
+  NB. "generate coords horizontal vertical"
+  NB.  i.e. generate coords for a line if it's horiz or vert
+  NB. given y = a b c d
+  NB. figure out if it's a vert or horiz line,
+  NB. and generate all the coords on the line
+
+  if. (0 { y) = (2 { y)   NB. y coords equal
+  do.
+     ly =: 0 { y
+     NB. ly is the line's y coord
+     'sx ex' =: /:~ 1 3 { y
+     cm =: ly ,. sx + i. 1 + ex - sx
+     _2 <\, cm
+  elseif. (1 { y) = (3 { y)   NB. x coords equal
+  do.
+     lx    =: 1 { y
+     'sy ey' =: /:~ 0 2 { y
+     cm =: (sy + i. 1 + ey - sy) ,. lx
+     _2 <\, cm
+  end.
+)
+
+
+         
+10 answer05a2 t
+
+   |value error: answer05a2
+|   10     answer05a2 t
+      
+answer05a2 =: 4 : 0
+  boardsize =: x
+  board =: (x, x) $ 0
+  clean_numbers =: (' -> '; ' ' ; ',' ; ' ') stringreplace y
+  lines =: +/ LF = y
+  d_raw =: (lines, 4) $ ". eliminateLF clean_numbers
+
+  d =: 1 0 3 2 {"1 d_raw
+  NB. transposed, so the coords in each row are y1 x1 y2 x2
+  
+  amcn =: gchv each _4 <\ , d
+  NB. amend_coordinates_with_nulls
+  NB. apply gchv to each row of d, producing (boxed) list of boxed coordlists
+  NB. some elements of amcn are empty boxes.  Strip them out:
+  amc =: (0 < > # each amc) # amc
+
+  amc
+)
+
+
+
+answer05a2 =: 4 : 0
+  boardsize =: x
+  board =: (x, x) $ 0
+  clean_numbers =: (' -> '; ' ' ; ',' ; ' ') stringreplace y
+  lines =: +/ LF = y
+  d_raw =: (lines, 4) $ ". eliminateLF clean_numbers
+
+  d =: 1 0 3 2 {"1 d_raw
+  NB. transposed, so the coords in each row are y1 x1 y2 x2
+  
+  amcn =: gchv each _4 <\ , d
+  NB. amend_coordinates_with_nulls
+     NB. apply gchv to each row of d, producing (boxed) list of boxed coordlists
+  NB. some elements of amcn are empty boxes.  Strip them out:
+  amc =: (0 < > # each amc) # amc
+
+  amc
+)
+
+
+         
+10 answer05a2 t
+
+   |noun result was required: answer05a2
+|       amc
+      
+answer05a2 =: 4 : 0
+  boardsize =: x
+  board =: (x, x) $ 0
+  clean_numbers =: (' -> '; ' ' ; ',' ; ' ') stringreplace y
+  lines =: +/ LF = y
+  d_raw =: (lines, 4) $ ". eliminateLF clean_numbers
+
+  d =: 1 0 3 2 {"1 d_raw
+  NB. transposed, so the coords in each row are y1 x1 y2 x2
+  
+  amcn =: gchv each _4 <\ , d
+  NB. amend_coordinates_with_nulls
+  NB. apply gchv to each row of d, producing (boxed) list of boxed coordlists
+  NB. some elements of amcn are empty boxes.  Strip them out:
+  amc =: (0 < > # each amc) # amcn
+
+  amc
+)
+
+
+
+answer05a2 =: 4 : 0
+  boardsize =: x
+  board =: (x, x) $ 0
+  clean_numbers =: (' -> '; ' ' ; ',' ; ' ') stringreplace y
+  lines =: +/ LF = y
+  d_raw =: (lines, 4) $ ". eliminateLF clean_numbers
+
+  d =: 1 0 3 2 {"1 d_raw
+  NB. transposed, so the coords in each row are y1 x1 y2 x2
+  
+  amcn =: gchv each _4 <\ , d
+  NB. amend_coordinates_with_nulls
+  NB. apply gchv to each row of d, producing (boxed) list of boxed coordlists
+  NB. some elements of amcn are empty boxes.  Strip them out:
+  amc =: (0 < > # each amc) # amcn
+   
+  amc
+)
+
+
+         
+NB. note: their indexing is transposed from J's indexing.
+
+NB. in J, first coord is the row number, from top
+NB.       second coord is the column number, from left
+
+NB. in problem, first coord is the column number, from left
+NB.             second column is the row number, from top
+
+NB. We're going to swap the input data
+NB. and work with it as J coords
+
+readfile =: 1!:1
+
+t =: readfile < jpath '~/Downloads/test-2021-05.txt'
+
+load 'strings'
+
+load 'regex'
+
+NB. to write a series of 1s into a matrix of 0s:
+NB.   m =: 4 4 $ 0
+NB.   1 ( 0 0 ; 1 0 ; 2 0 ) } m
+
+NB.  So let's focus on parsing the input
+eliminateLF =: 3 : 0
+  ' ' ((LF = y) # (i. # y)) } y
+)
+
+amendboard =: 4 : 0
+  1 y } (x,x) $ 0
+)
+
+
+answer05a =: 4 : 0
+  boardsize =: x
+  board =: (x, x) $ 0
+  clean_numbers =: (' -> '; ' ' ; ',' ; ' ') stringreplace y
+  lines =: +/ LF = y
+  d =: (lines, 4) $ ". eliminateLF clean_numbers
+
+  vlines =: ((0 {"1 d) = (2 {"1 d)) # d
+  NB. lines where the X coordinate stays the same,
+  NB. therefore col 0 == col 2
+
+  hlines =: ((1 {"1 d) = (3 {"1 d)) # d
+
+  h_endpoints =: (/:"1)~ 0 2 {"1 hlines
+  NB. endpoints of the horizontal lines, sorted
+  
+  v_endpoints =: (/:"1)~ 1 3 {"1 vlines
+
+  v_x =: 0{"1 vlines
+  NB. x coords of the vertical lines
+
+  h_y =: 1{"1 hlines
+  NB. y coords of the horiz lines
+
+  boxed_coordlists =:  h_y ,./~ each i. each 1 + -/ |. |: h_endpoints
+  amc =: _2 <\ each , each boxed_coordlists
+  NB. amend_coordlists =: ; _2 <\ each , each boxed_coordlists
+  +/ > x amendboard each amc
+)
+
+
+10 answer05a t
+
+answer05a2 =: 4 : 0
+  boardsize =: x
+  board =: (x, x) $ 0
+  clean_numbers =: (' -> '; ' ' ; ',' ; ' ') stringreplace y
+  lines =: +/ LF = y
+  d_raw =: (lines, 4) $ ". eliminateLF clean_numbers
+
+  d =: 1 0 3 2 {"1 d_raw
+  NB. transposed, so the coords in each row are y1 x1 y2 x2
+  
+  amcn =: gchv each _4 <\ , d
+  NB. amend_coordinates_with_nulls
+  NB. apply gchv to each row of d, producing (boxed) list of boxed coordlists
+  NB. some elements of amcn are empty boxes.  Strip them out:
+  amc =: (0 < > # each amc) # amcn
+
+  amc
+)
+
+
+NB.  alternate approach:
+NB.  generate list of all coordinates in the matrix; match each against the
+NB.  lines
+
+gchv =: 3 : 0
+  NB. "generate coords horizontal vertical"
+  NB.  i.e. generate coords for a line if it's horiz or vert
+  NB. given y = a b c d
+  NB. figure out if it's a vert or horiz line,
+  NB. and generate all the coords on the line
+
+  if. (0 { y) = (2 { y)   NB. y coords equal
+  do.
+     ly =: 0 { y
+     NB. ly is the line's y coord
+     'sx ex' =: /:~ 1 3 { y
+     cm =: ly ,. sx + i. 1 + ex - sx
+     _2 <\, cm
+  elseif. (1 { y) = (3 { y)   NB. x coords equal
+  do.
+     lx =: 1 { y
+     'sy ey' =: /:~ 0 2 { y
+     cm =: (sy + i. 1 + ey - sy) ,. lx
+     _2 <\, cm
+  end.
+)
+
+10 answer05a2 t
+
+overlaps =: 4 : 0
+  NB.  aX aY overlaps sX sY eX eY
+  NB.  returns if point a is on the line from s to e
+  NB.  y is a matrix of those, actually
+  xmatches =: (*./"1) (0 { x) = 0 2 {"1 y
+  xinrange =: ((0 { x) >: (0 {"1 y)) *. (0 { x) <: (2 {"1 y)
+
+  ymatches =: (*./"1) (1 { x) = 1 3 {"1 y
+  yinrange =: ((1 { x) >: (1 {"1 y)) *. (1 { x) <: (3 {"1 y)
+
+  (xmatches *. yinrange) +. ymatches *. xinrange
+)
+
+
+
+
+
+
+NB. note: their indexing is transposed from J's indexing.
+
+NB. in J, first coord is the row number, from top
+NB.       second coord is the column number, from left
+
+NB. in problem, first coord is the column number, from left
+NB.             second colu   mn is the row number, from top
+
+NB. We're going to swap the input data
+NB. and work with it as J coords
+
+readfile =: 1!:1
+
+t =: readfile < jpath '~/Downloads/test-2021-05.txt'
+
+load 'strings'
+
+load 'regex'
+
+NB. to write a series of 1s into a matrix of 0s:
+NB.   m =: 4 4 $ 0
+NB.   1 ( 0 0 ; 1 0 ; 2 0 ) } m
+
+NB.  So let's focus on parsing the input
+eliminateLF =: 3 : 0
+  ' ' ((LF = y) # (i. # y)) } y
+)
+
+amendboard =: 4 : 0
+  1 y } (x,x) $ 0
+)
+
+
+answer05a =: 4 : 0
+  boardsize =: x
+     board =: (x, x) $ 0
+  clean_numbers =: (' -> '; ' ' ; ',' ; ' ') stringreplace y
+  lines =: +/ LF = y
+  d =: (lines, 4) $ ". eliminateLF clean_numbers
+
+  vlines =: ((0 {"1 d) = (2 {"1 d)) # d
+  NB. lines where the X coordinate stays the same,
+     NB. therefore col 0 == col 2
+
+  hlines =: ((1 {"1 d) = (3 {"1 d)) # d
+
+  h_endpoints =: (/:"1)~ 0 2 {"1 hlines
+  NB. endpoints of the horizontal lines, sorted
+  
+  v_endpoints =: (/:"1)~ 1 3 {"1 vlines
+
+  v_x =: 0{"1 vlines
+  NB. x coords of the vertical lines
+
+  h_y =: 1{"1 hlines
+  NB. y coords of the horiz lines
+   
+  boxed_coordlists =:  h_y ,./~ each i. each 1 + -/ |. |: h_endpoints
+  amc =: _2 <\ each , each boxed_coordlists
+  NB. amend_coordlists =: ; _2 <\ each , each boxed_coordlists
+  +/ > x amendboard each amc
+)
+
+
+10 answer05a t
+
+answer05a2 =: 4 : 0
+     boardsize =: x
+  board =: (x, x) $ 0
+  clean_numbers =: (' -> '; ' ' ; ',' ; ' ') stringreplace y
+  lines =: +/ LF = y
+  d_raw =: (lines, 4) $ ". eliminateLF clean_numbers
+
+  d =: 1 0 3 2 {"1 d_raw
+  NB. transposed, so the coords in each row ar   e y1 x1 y2 x2
+  
+  amcn =: gchv each _4 <\ , d
+  NB. amend_coordinates_with_nulls
+  NB. apply gchv to each row of d, producing (boxed) list of boxed coordlists
+  NB. some elements of amcn are empty boxes.  Strip them out:
+  amc =: (0 < > # each amc) # amcn
+
+  amc
+)
+
+
+NB.  alternate approach:
+NB.  generate list of all coordinates in the matrix; match each against the   
+NB.  lines
+
+gchv =: 3 : 0
+  NB. "generate coords horizontal vertical"
+  NB.  i.e. generate coords for a line if it's horiz or vert
+  NB. given y = a b c d
+  NB. figure out if it's a vert or horiz line,
+  NB. and generate all the coords on the line
+
+     if. (0 { y) = (2 { y)   NB. y coords equal
+  do.
+     ly =: 0 { y
+     NB. ly is the line's y coord
+     'sx ex' =: /:~ 1 3 { y
+     cm =: ly ,. sx + i. 1 + ex - sx
+     _2 <\, cm
+  elseif. (1 { y) = (3 { y)   NB. x coords equal
+  do.
+     lx =: 1 { y
+     'sy ey' =: /:~ 0 2 { y
+        cm =: (sy + i. 1 + ey - sy) ,. lx
+     _2 <\, cm
+  end.
+)
+
+10 answer05a2 t
+
+overlaps =: 4 : 0
+  NB.  aX aY overlaps sX sY eX eY
+  NB.  returns if point a is on the line from s to e
+  NB.  y is a matrix of those, actually
+  xmatches =: (*./"   1) (0 { x) = 0 2 {"1 y
+  xinrange =: ((0 { x) >: (0 {"1 y)) *. (0 { x) <: (2 {"1 y)
+
+  ymatches =: (*./"1) (1 { x) = 1 3 {"1 y
+  yinrange =: ((1 { x) >: (1 {"1 y)) *. (1 { x) <: (3 {"1 y)
+
+  (xmatches *. yinrange) +. ymatches *. xinrange
+)
+
+
+
+
+
+                                                                     0 0 0 0 2 0 0 0 0 2
+0 0 0 0 2 0 0 0 0 2
+0 0 0 0 2 0 0 0 0 2
+0 0 0 0 1 0 0 0 0 1
+0 0 0 0 1 0 0 0 0 1
+0 0 0 0 1 0 0 0 0 1
+0 0 0 0 1 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+                                 |length error: answer05a2
+|   amc=:(0<>#each amc)    #amcn
+                        
+NB. note: their indexing is transposed from J's indexing.
+
+NB. in J, first coord is the row number, from top
+NB.       second coord is the column number, from left
+
+NB. in problem, first coord is the column number, from left
+NB.             second column is the row number, from top
+
+NB. We're going to swap the input data
+NB. and work with it as J coords
+
+readfile =: 1!:1
+
+t =: readfile < jpath '~/Downloads/test-2021-05.txt'
+
+load 'strings'
+
+load 'regex'
+
+NB. to write a series of 1s into a matrix of 0s:
+NB.   m =: 4 4 $ 0
+NB.   1 ( 0 0 ; 1 0 ; 2 0 ) } m
+
+NB.  So let's focus on parsing the input
+eliminateLF =: 3 : 0
+  ' ' ((LF = y) # (i. # y)) } y
+)
+
+amendboard =: 4 : 0
+  1 y } (x,x) $ 0
+)
+
+
+answer05a =: 4 : 0
+  boardsize =: x
+  board =: (x, x) $ 0
+  clean_numbers =: (' -> '; ' ' ; ',' ; ' ') stringreplace y
+  lines =: +/ LF = y
+  d =: (lines, 4) $ ". eliminateLF clean_numbers
+
+  vlines =: ((0 {"1 d) = (2 {"1 d)) # d
+  NB. lines where the X coordinate stays the same,
+  NB. therefore col 0 == col 2
+
+  hlines =: ((1 {"1 d) = (3 {"1 d)) # d
+
+  h_endpoints =: (/:"1)~ 0 2 {"1 hlines
+  NB. endpoints of the horizontal lines, sorted
+  
+  v_endpoints =: (/:"1)~ 1 3 {"1 vlines
+
+  v_x =: 0{"1 vlines
+  NB. x coords of the vertical lines
+
+  h_y =: 1{"1 hlines
+  NB. y coords of the horiz lines
+
+  boxed_coordlists =:  h_y ,./~ each i. each 1 + -/ |. |: h_endpoints
+  amc =: _2 <\ each , each boxed_coordlists
+  NB. amend_coordlists =: ; _2 <\ each , each boxed_coordlists
+  +/ > x amendboard each amc
+)
+
+
+10 answer05a t
+
+answer05a2 =: 4 : 0
+  boardsize =: x
+  board =: (x, x) $ 0
+  clean_numbers =: (' -> '; ' ' ; ',' ; ' ') stringreplace y
+  lines =: +/ LF = y
+  d_raw =: (lines, 4) $ ". eliminateLF clean_numbers
+
+  d =: 1 0 3 2 {"1 d_raw
+  NB. transposed, so the coords in each row are y1 x1 y2 x2
+  
+  amcn =: gchv each _4 <\ , d
+  NB. amend_coordinates_with_nulls
+  NB. apply gchv to each row of d, producing (boxed) list of boxed coordlists
+  NB. some elements of amcn are empty boxes.  Strip them out:
+  amc =: (0 < > # each amc) # amcn
+
+  amc
+)
+
+
+NB.  alternate approach:
+NB.  generate list of all coordinates in the matrix; match each against the
+NB.  lines
+
+gchv =: 3 : 0
+  NB. "generate coords horizontal vertical"
+  NB.  i.e. generate coords for a line if it's horiz or vert
+  NB. given y = a b c d
+  NB. figure out if it's a vert or horiz line,
+  NB. and generate all the coords on the line
+
+  if. (0 { y) = (2 { y)   NB. y coords equal
+  do.
+     ly =: 0 { y
+     NB. ly is the line's y coord
+     'sx ex' =: /:~ 1 3 { y
+     cm =: ly ,. sx + i. 1 + ex - sx
+     _2 <\, cm
+  elseif. (1 { y) = (3 { y)   NB. x coords equal
+  do.
+     lx =: 1 { y
+     'sy ey' =: /:~ 0 2 { y
+     cm =: (sy + i. 1 + ey - sy) ,. lx
+     _2 <\, cm
+  end.
+)
+
+10 answer05a2 t
+
+overlaps =: 4 : 0
+  NB.  aX aY overlaps sX sY eX eY
+  NB.  returns if point a is on the line from s to e
+  NB.  y is a matrix of those, actually
+  xmatches =: (*./"1) (0 { x) = 0 2 {"1 y
+  xinrange =: ((0 { x) >: (0 {"1 y)) *. (0 { x) <: (2 {"1 y)
+
+  ymatches =: (*./"1) (1 { x) = 1 3 {"1 y
+  yinrange =: ((1 { x) >: (1 {"1 y)) *. (1 { x) <: (3 {"1 y)
+
+  (xmatches *. yinrange) +. ymatches *. xinrange
+)
+
+
+
+
+
+
+NB. note: their indexing is transposed from J's indexing.
+
+NB. in J, first coord is the row number, from top
+NB.       second coord is the column number, from left
+
+NB. in problem, first coord is the column number, from left
+NB.             second colu   mn is the row number, from top
+
+NB. We're going to swap the input data
+NB. and work with it as J coords
+
+readfile =: 1!:1
+
+t =: readfile < jpath '~/Downloads/test-2021-05.txt'
+
+load 'strings'
+
+load 'regex'
+
+NB. to write a series of 1s into a matri   x of 0s:
+NB.   m =: 4 4 $ 0
+NB.   1 ( 0 0 ; 1 0 ; 2 0 ) } m
+
+NB.  So let's focus on parsing the input
+eliminateLF =: 3 : 0
+  ' ' ((LF = y) # (i. # y)) } y
+)
+
+amendboard =: 4 : 0
+  1 y } (x,x) $ 0
+)
+
+
+answer05a =: 4 : 0
+  bo   ardsize =: x
+  board =: (x, x) $ 0
+  clean_numbers =: (' -> '; ' ' ; ',' ; ' ') stringreplace y
+  lines =: +/ LF = y
+  d =: (lines, 4) $ ". eliminateLF clean_numbers
+
+  vlines =: ((0 {"1 d) = (2 {"1 d)) # d
+  NB. lines where the X coordinate stays    the same,
+  NB. therefore col 0 == col 2
+
+  hlines =: ((1 {"1 d) = (3 {"1 d)) # d
+
+  h_endpoints =: (/:"1)~ 0 2 {"1 hlines
+  NB. endpoints of the horizontal lines, sorted
+  
+  v_endpoints =: (/:"1)~ 1 3 {"1 vlines
+
+  v_x =: 0{"1 vlines
+  NB. x coords of the vertical lines
+   
+  h_y =: 1{"1 hlines
+  NB. y coords of the horiz lines
+
+  boxed_coordlists =:  h_y ,./~ each i. each 1 + -/ |. |: h_endpoints
+  amc =: _2 <\ each , each boxed_coordlists
+  NB. amend_coordlists =: ; _2 <\ each , each boxed_coordli   sts
+  +/ > x amendboard each amc
+)
+
+
+10 answer05a t
+
+answer05a2 =: 4 : 0
+  boardsize =: x
+  board =: (x, x) $ 0
+  clean_numbers =: (' -> '; ' ' ; ',' ; ' ') stringreplace y
+  lines =: +/ LF = y
+  d_raw =: (lines, 4) $ ". eliminateLF clean   _numbers
+
+  d =: 1 0 3 2 {"1 d_raw
+  NB. transposed, so the coords in each row are y1 x1 y2 x2
+  
+  amcn =: gchv each _4 <\ , d
+  NB. amend_coordinates_with_nulls
+  NB. apply gchv to each row of d, producing (boxed) list of boxed coordlists
+  NB. some    elements of amcn are empty boxes.  Strip them out:
+  amc =: (0 < > # each amc) # amcn
+
+  amc
+)
+
+
+NB.  alternate approach:
+NB.  generate list of all coordinates in the matrix; match each against the
+NB.  lines
+
+gchv =: 3    : 0
+  NB. "generate coords horizontal vertical"
+  NB.  i.e. generate coords for a line if it's horiz or vert
+  NB. given y = a b c d
+  NB. figure out if it's a vert or horiz line,
+  NB. and generate all the coords on the line
+
+  if. (0 { y) = (2 { y)   NB. y coords equal
+     do.
+     ly =: 0 { y
+     NB. ly is the line's y coord
+     'sx ex' =: /:~ 1 3 { y
+     cm =: ly ,. sx + i. 1 + ex - sx
+     _2 <\, cm
+  elseif. (1 { y) = (3 { y)   NB. x coords equal
+  do.
+     lx =: 1 { y
+     'sy ey' =: /:~ 0 2 { y   
+     cm =: (sy + i. 1 + ey - sy) ,. lx
+     _2 <\, cm
+  end.
+)
+
+10 answer05a2 t
+
+overlaps =: 4 : 0
+  NB.  aX aY overlaps sX sY eX eY
+  NB.  returns if point a is on the line from s to e
+  NB.  y is a matrix of those, actua   lly
+  xmatches =: (*./"1) (0 { x) = 0 2 {"1 y
+  xinrange =: ((0 { x) >: (0 {"1 y)) *. (0 { x) <: (2 {"1 y)
+
+  ymatches =: (*./"1) (1 { x) = 1 3 {"1 y
+  yinrange =: ((1 { x) >: (1 {"1 y)) *. (1 { x) <: (3 {"1 y)
+
+  (xmatches *. yinrange) +. ymatches *. xinrange
+   )
+
+
+
+
+
+                                                            0 0 0 0 2 0 0 0 0 2
+0 0 0 0 2 0 0 0 0 2
+0 0 0 0 2 0 0 0 0 2
+0 0 0 0 1 0 0 0 0 1
+0 0 0 0 1 0 0 0 0 1
+0 0 0 0 1 0 0 0 0 1
+0 0 0 0 1 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+                                 |length error: answer05a2
+|   amc=:(0<>#each amc)    #amcn
+                          C-c C-c^C  C-c C-c^C
+10 answer05a2 t
+
+   |length error: answer05a2
+|   amc=:(0<>#each amc)    #amcn
+      amcn
++-------------------------++-----------------------------+---------+---------------------++-------------+-------------+++
+|+---+---+---+---+---+---+||+---+---+---+---+---+---+---+|+---+---+|+---+---+---+---+---+||+---+---+---+|+---+---+---+|||
+||9 0|9 1|9 2|9 3|9 4|9 5||||4 3|4 4|4 5|4 6|4 7|4 8|4 9|||1 2|2 2|||0 7|1 7|2 7|3 7|4 7||||9 0|9 1|9 2|||4 1|4 2|4 3||||
+|+---+---+---+---+---+---+||+---+---+---+---+---+---+---+|+---+---+|+---+---+---+---+---+||+---+---+---+|+---+---+---+|||
++-------------------------++-----------------------------+---------+---------------------++-------------+-------------+++
+   amcn
+  amc =: (0 < > # each amcn) # amcn
+
++-------------------------++-----------------------------+---------+---------------------++-------------+-------------+++
+|+---+---+---+---+---+---+||+---+---+---+---+---+---+---+|+---+---+|+---+---+---+---+---+||+---+---+---+|+---+---+---+|||
+||9 0|9 1|9 2|9 3|9 4|9 5||||4 3|4 4|4 5|4 6|4 7|4 8|4 9|||1 2|2 2|||0 7|1 7|2 7|3 7|4 7||||9 0|9 1|9 2|||4 1|4 2|4 3||||
+|+---+---+---+---+---+---+||+---+---+---+---+---+---+---+|+---+---+|+---+---+---+---+---+||+---+---+---+|+---+---+---+|||
++-------------------------++-----------------------------+---------+---------------------++-------------+-------------+++
+         amcn
+  amc =: (0 < > # each amcn) # amcn
+
++-------------------------++-----------------------------+---------+---------------------++-------------+-------------+++
+|+---+---+---+---+---+---+||+---+---+---+---+---+---+---+|+---+---+|+---+---+---+---+---+||+---+---+---+|+---+---+---+|||
+||9 0|9 1|9 2|9 3|9 4|9 5||||4 3|4 4|4 5|4 6|4 7|4 8|4 9|||1 2|2 2|||0 7|1 7|2 7|3 7|4 7||||9 0|9 1|9 2|||4 1|4 2|4 3||||
+|+---+---+---+---+---+---+||+---+---+---+---+---+---+---+|+---+---+|+---+---+---+---+---+||+---+---+---+|+---+---+---+|||
++-------------------------++-----------------------------+---------+---------------------++-------------+-------------+++
+         amc
++-------------------------+-----------------------------+---------+---------------------+-------------+-------------+
+|+---+---+---+---+---+---+|+---+---+---+---+---+---+---+|+---+---+|+---+---+---+---+---+|+---+---+---+|+---+---+---+|
+||9 0|9 1|9 2|9 3|9 4|9 5|||4 3|4 4|4 5|4 6|4 7|4 8|4 9|||1 2|2 2|||0 7|1 7|2 7|3 7|4 7|||9 0|9 1|9 2|||4 1|4 2|4 3||
+|+---+---+---+---+---+---+|+---+---+---+---+---+---+---+|+---+---+|+---+---+---+---+---+|+---+---+---+|+---+---+---+|
++-------------------------+-----------------------------+---------+---------------------+-------------+-------------+
+   10 amendboard each amc
++-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+
+|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 1 0 0|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|
+|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|0 0 1 0 0 0 0 0 0 0|0 0 0 0 0 0 0 1 0 0|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|
+|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|0 0 1 0 0 0 0 0 0 0|0 0 0 0 0 0 0 1 0 0|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|
+|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 1 0 0|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|
+|0 0 0 0 0 0 0 0 0 0|0 0 0 1 1 1 1 1 1 1|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 1 0 0|0 0 0 0 0 0 0 0 0 0|0 1 1 1 0 0 0 0 0 0|
+|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|
+|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|
+|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|
+|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|
+|1 1 1 1 1 1 0 0 0 0|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|1 1 1 0 0 0 0 0 0 0|0 0 0 0 0 0 0 0 0 0|
++-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+
+   +/ > 10 amendboard each amc
+0 0 0 0 0 0 0 1 0 0
+0 0 1 0 0 0 0 1 0 0
+0 0 1 0 0 0 0 1 0 0
+0 0 0 0 0 0 0 1 0 0
+0 1 1 2 1 1 1 2 1 1
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+2 2 2 1 1 1 0 0 0 0
+   2 >: +/ > 10 amendboard each amc
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+   1 < +/ > 10 amendboard each amc
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 0 1 0 0 0 1 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0
+1 1 1 0 0 0 0 0 0 0
+   +/ 1 < +/ > 10 amendboard each amc
+1 1 1 1 0 0 0 1 0 0
+   +/ , 1 < +/ > 10 amendboard each amc
+5
+   
+answer05a2 =: 3 : 0
+  clean_numbers =: (' -> '; ' ' ; ',' ; ' ') stringreplace y
+  lines =: +/ LF = y
+  d_raw =: (lines, 4) $ ". eliminateLF clean_numbers
+
+  N =: 1 + >:/ , d_raw
+
+  d =: 1 0 3 2 {"1 d_raw
+  NB. transposed, so the coords in each row are y1 x1 y2 x2
+  
+  amcn =: gchv each _4 <\ , d
+  NB. amend_coordinates_with_nulls
+  NB. apply gchv to each row of d, producing (boxed) list of boxed coordlists
+  NB. some elements of amcn are empty boxes.  Strip them out:
+  amc =: (0 < > # each amcn) # amcn
+
+  +/ , 1 < +/ > N amendboard each amc
+  NB. calculate final answer
+)
+
+
+
+answer05a2 =: 3 : 0
+  clean_numbers =: (' -> '; ' ' ; ',' ; ' ') stringreplace y
+  lines =: +/ LF = y
+  d_raw =: (lines, 4) $ ". eliminateLF clean_numbers
+
+  N =: 1 + >:/ , d_raw
+
+  d =: 1 0 3 2 {"1 d_raw
+  NB. transposed, so the coords in each row are y1 x1 y2 x2
+  
+  amcn =: gchv each _4 <\ , d
+  NB. amend_coordinates_with_nulls
+  NB. apply gchv to each row of d, producing (boxed) list of boxed coordlists
+  NB. some elements of amcn are empty boxes.  Strip them out:
+  amc =: (0 < > # each amcn) # amcn
+
+     +/ , 1 < +/ > N amendboard each amc
+  NB. calculate final answer
+)
+
+
+         
+   answer05a2 t
+|index error: amendboard
+|   1     y}(x,x)$0
+   N
+1
+   d_raw
+0 9 5 9
+8 0 0 8
+9 4 3 4
+2 2 2 1
+7 0 7 4
+6 4 2 0
+0 9 2 9
+3 4 1 4
+0 0 8 8
+5 5 8 2
+   >:/ , d_raw
+0
+   <:/ , d_raw
+1
+   , d_raw
+0 9 5 9 8 0 0 8 9 4 3 4 2 2 2 1 7 0 7 4 6 4 2 0 0 9 2 9 3 4 1 4 0 0 8 8 5 5 8 2
+   >./ , d_raw
+9
+   1 + >./ , d_raw
+10
+   
+answer05a2 =: 3 : 0
+  clean_numbers =: (' -> '; ' ' ; ',' ; ' ') stringreplace y
+  lines =: +/ LF = y
+  d_raw =: (lines, 4) $ ". eliminateLF clean_numbers
+
+  N =: 1 + >./ , d_raw
+
+  d =: 1 0 3 2 {"1 d_raw
+  NB. transposed, so the coords in each row are y1 x1 y2 x2
+  
+  amcn =: gchv each _4 <\ , d
+  NB. amend_coordinates_with_nulls
+  NB. apply gchv to each row of d, producing (boxed) list of boxed coordlists
+  NB. some elements of amcn are empty boxes.  Strip them out:
+  amc =: (0 < > # each amcn) # amcn
+
+  +/ , 1 < +/ > N amendboard each amc
+  NB. calculate final answer
+)
+
+
+
+answer05a2 =: 3 : 0
+  clean_numbers =: (' -> '; ' ' ; ',' ; ' ') stringreplace y
+  lines =: +/ LF = y
+  d_raw =: (lines, 4) $ ". eliminateLF clean_numbers
+
+  N =: 1 + >./ , d_raw
+
+  d =: 1 0 3 2 {"1 d_raw
+  NB. transposed, so the coords in each row are y1 x1 y2 x2
+  
+  amcn =: gchv each _4 <\ , d
+  NB. amend_coordinates_with_nulls
+     NB. apply gchv to each row of d, producing (boxed) list of boxed coordlists
+  NB. some elements of amcn are empty boxes.  Strip them out:
+  amc =: (0 < > # each amcn) # amcn
+
+  +/ , 1 < +/ > N amendboard each amc
+  NB. calculate final answer
+)
+
+
+         
+   answer05a2 t
+5
+   $ i
+$ i
+   
+i =: readfile < jpath '~/Downloads/input-2021-05.txt'
+
+         
+   $i
+9283
+   30 {. i
+445,187 -> 912,654
+820,46 -> 2
+   _30 {. i
+-> 915,518
+727,365 -> 727,216
+
+   answer05a2 i
+5197
+   5197
+5197
+   y
+|value error: y
+   t
+0,9 -> 5,9
+8,0 -> 0,8
+9,4 -> 3,4
+2,2 -> 2,1
+7,0 -> 7,4
+6,4 -> 2,0
+0,9 -> 2,9
+3,4 -> 1,4
+0,0 -> 8,8
+5,5 -> 8,2
+
+   d
+...
+559 464 559 936
+736 685 736 368
+941 114 307 114
+643 571 643  74
+185 281 177 273
+937 497 469 497
+815 152 815 702
+ 43  76 947 980
+149 272 149 101
+945 934 118 107
+476 532 476 759
+942 955 942 397
+918  31  18 931
+420 790 420 389
+496  36 317 215
+209 252 209 139
+148 704 133 719
+571 413 571 165
+433 690 607 864
+417 976 876 517
+568 803 568 443
+558 335 334 335
+807 405 521 691
+482 194 190 486
+856 377 802 377
+842 313 254 313
+961 449 710 198
+916 197 797 197
+965  82  88 959
+239 371 697 829
+ 70 471  70 596
+144 835 950 835
+486 283 486 506
+ 29 147 747 147
+485 187 195 187
+144 781 144 480
+839 801 715 925
+960 415 442 415
+939 877  91  29
+118  22 439  22
+315 460 315 450
+960 982  49  71
+231 105 331 105
+174  98 174 551
+978 721 295  38
+290 167 133 167
+158 218 908 218
+812 819 812 758
+ 92 123 132 123
+721  66 906  66
+441 478 930 967
+ 58 284  58 464
+ 15 958 936  37
+337 310 288 359
+763 212 373 212
+279 101 267 101
+409 622 925 106
+657 318 432 318
+631 938 650 938
+881 142 881 254
+987 848 451 848
+223 686 223 481
+248 124 248 812
+267 246 148 246
+670  96 442 324
+888 645 628 385
+555 417 858 417
+495 543 150 543
+350  73 717 440
+704 459 179 459
+493 871 764 871
+ 34 911 881  64
+791 544 791 703
+218 447 218  62
+649 202 649 396
+916 935  36  55
+408 124 761 477
+850 608 850 484
+876 935 876 582
+612 377 612 269
+727 413 679 365
+451  64 451 850
+807 684 807 357
+364 323 364 372
+300 887 300 419
+831 837 927 837
+255 294 729 768
+ 23 878 760 141
+627  36 627 157
+703 824 968 824
+109 356 109 657
+266 799 752 313
+600  71  21 650
+863 564  54 564
+720  36 720 109
+488 318 488 682
+350 249 350 979
+502 560 502 255
+327 132 246 132
+906 287 906 791
+110 818 882 818
+ 17 937 841 113
+710  50  87 673
+952 702 533 702
+552 666 552 611
+962 612 462 112
+529 260 529 351
+313 440 663 440
+341 605 141 405
+287 277 287 461
+890 268  92 268
+526 764 639 877
+697 165 697 832
+716 240 155 801
+429 872 429 578
+816  88 816 338
+881 981 138 981
+351 457 679 457
+526 850 447 850
+449 139 449 165
+544 127 934 127
+890 160 305 745
+113 526 336 303
+500  17 621  17
+311 796 926 181
+218 260 218 787
+989 536 261 536
+826 257 180 257
+ 37 531 493 531
+942 961 187 206
+668 536 868 536
+967 154 931 154
+317 808 873 808
+258 487 258 599
+962  59 219 802
+945 322 837 322
+973 378 628  33
+556 668 556 691
+728 819 728 787
+261 484 874 484
+271 333 271 278
+515 733 523 741
+854 775 602 523
+215  67 215 616
+685 951 433 951
+105 372 494 372
+788 917  23 917
+584 890 584 245
+276 748 276 893
+721 733 747 733
+908 225 908 897
+140 437 140 423
+513 456 833 136
+135 413 596 413
+245 143 981 879
+639 870 639 942
+175  28 843 696
+303 393 197 393
+986 169 986 458
+ 44  43 953 952
+405 236 229  60
+845 266 845 292
+ 98 529 532  95
+658  95 658 695
+454 368 710 112
+776 506 776 662
+494 928 170 604
+138 179 859 900
+560  45 197 408
+654 655  36  37
+432  56 456  56
+614 844 898 844
+191 240 112 240
+911 639 911 213
+887  47 104 830
+ 50  57 970 977
+928 899 928 111
+676 962 518 962
+585 129 245 469
+775 988 553 988
+344 417 769 842
+110 468  72 506
+204 687 345 687
+553 828 490 765
+894  75  93  75
+798  26 783  11
+ 44 967 478 967
+481 240 481 947
+254 794 254 162
+944 502 944 812
+417 331 417 410
+275 850 980 850
+130 671 941 671
+ 99 240 381 240
+399 771 399 318
+ 11 946 929  28
+939 731 846 824
+ 71 268 635 832
+ 37 968 642 968
+365 935 365 515
+792 199 792 932
+116  32 116 371
+ 67 324  67 941
+181 453 128 453
+982 958 139 115
+168 962 976 154
+215 474 215 333
+675 458 315 458
+302 577 302 300
+493 704 876 704
+549 887 439 887
+328  81 328 724
+490 575 490 670
+ 17 576 218 576
+ 46  21 988 963
+235 532 615 532
+213 796 407 796
+948  55  23 980
+471 775 471 272
+138  26 138 344
+518 635 518 915
+365 727 216 727
+   y =: 36 72 21 72
+   2 2 $ y
+36 72
+21 72
+   -/ 2 2 $ y
+15 0
+   ((0 2) {"1 d) - 1 3 {"1 d
+...
+  95 _377
+  51  368
+ 827  193
+  72  569
+ _96  _96
+ 440  _28
+ 663  113
+ _33  _33
+_123   48
+  11   11
+ _56 _283
+ _13  545
+ 887 _913
+_370   31
+ 460  102
+ _43   70
+_556 _586
+ 158  406
+_257 _257
+_559  359
+_235  125
+ 223   _1
+ 402 _170
+ 288 _296
+ 479  425
+ 529  _59
+ 512  512
+ 719  600
+ 883 _871
+_132 _132
+_401 _526
+_691  115
+ 203  _20
+_118  600
+ 298    8
+_637 _336
+  38 _210
+ 545   27
+  62   62
+  96  417
+_145 _135
+ _22  _22
+ 126  226
+  76 _377
+ 257  257
+ 123  _34
+ _60  690
+  _7   54
+ _31    9
+ 655  840
+ _37  _37
+_226 _406
+_943  899
+  27  _71
+ 551  161
+ 178  166
+_213  819
+ 339  114
+_307 _288
+ 739  627
+ 139 _397
+_463 _258
+ 124 _564
+  21  _98
+ 574  118
+ 243  243
+ 138  441
+ _48 _393
+ 277  277
+ 245 _280
+_378 _107
+_877  817
+ 247   88
+_229  156
+ 447  253
+ _19  _19
+ 284  284
+ 242  366
+ _59  294
+ 235  343
+ 314  314
+ 387 _399
+ 123  450
+  41   _8
+_587 _119
+  _6   90
+ _39  _39
+_855  619
+ 591  470
+_121  144
+_247 _548
+_533  439
+ 529 _629
+ 299 _510
+ 684  611
+ 170 _194
+ 101 _629
+ _58  247
+ 195  114
+ 619  115
+_708   64
+_920  728
+ 660 _586
+ 250 _169
+_114  _59
+ 350  350
+ 269  178
+_127  223
+_264 _264
+  10 _174
+ 622 _176
+_238 _238
+ 532 _135
+ 476 _646
+_443 _149
+ 728  478
+_100 _843
+_106  222
+_324 _403
+ 310  284
+ 417  807
+ 730 _440
+_413   33
+ 483  604
+_485  745
+ _42 _569
+ 453 _275
+ 569  _77
+_494  _38
+ _19  _19
+ 132  332
+ 813  777
+_491   65
+_229 _341
+ 903 _583
+ 623  515
+ 595  595
+_112 _135
+ _91  _59
+_223  390
+ _62   _7
+_218 _218
+  79   79
+ 148 _401
+_266 _518
+_267  122
+_129 _894
+_306  339
+_472 _617
+ _12   14
+ 683   11
+_297 _283
+  57  697
+_278  183
+ 102  102
+_231 _303
+ 147  147
+ _90 _196
+ 817  528
+   1    1
+ 169  169
+ 579  553
+_431  437
+ 563  _37
+  86  598
+ 270  114
+_434 _434
+ _41  _41
+ 515 _211
+  _1   _1
+ 376  400
+_230   54
+ _49 _128
+ 272  698
+ 840 _726
+  _7   _7
+  29  817
+_286 _444
+ 456 _224
+_213 _435
+ _73  _73
+_358 _434
+_483 _342
+_275 _275
+ 819   18
+ 772  772
+_923 _489
+ 241 _466
+_540   92
+ 442  132
+  86    7
+_575  130
+_541  270
+_141  141
+_372   81
+_935  901
+ 208   22
+_197 _197
+_931 _326
+_570 _150
+ 593 _140
+  84 _255
+_257 _874
+_272 _325
+  24   24
+_794  822
+_259 _118
+ 217 _143
+_275    2
+_211  172
+_338 _448
+ 247 _396
+ _85 _180
+_559 _358
+  25   25
+_297   83
+_583 _389
+ 893 _957
+_304  199
+ 112 _206
+_117 _397
+_362 _511
+   3 { d
+898 955 10 67
+   $ d
+500 4
+   3 {. d
+187 445 654 912
+ 46 820 841  25
+621 216 379 458
+   answer05a2 t
+5
+   d
+9 0 9 5
+0 8 8 0
+4 9 4 3
+2 2 1 2
+0 7 4 7
+4 6 0 2
+9 0 9 2
+4 3 4 1
+0 0 8 8
+5 5 2 8
+   ((0 2) {"1 d) - 1 3 {"1 d
+ 9  4
+_8  8
+_5  1
+ 0 _1
+_7 _3
+_2 _2
+ 9  7
+ 1  3
+ 0  0
+ 0 _6
+   ((0 1) {"1 d) - 2 3 {"1 d
+ 0 _5
+_8  8
+ 0  6
+ 1  0
+_4  0
+ 4  4
+ 0 _2
+ 0  2
+_8 _8
+ 3 _3
+   gchvd 0 { d
+|value error: gchvd
+|       gchvd 0{d
+   
+gchvd =: 3 : 0
+  offset =: -/ 2 2 $ u
+  offset
+)
+
+
+            
+   
+gchvd 0 { d
+gchvd 1 { d
+
+
+   |value error: gchvd
+|   offset=:-/2 2$    u
+   |value error: gchvd
+|   offset=:-/2 2$    u
+         
+gchvd =: 3 : 0
+  offset =: -/ 2 2 $ y
+  offset
+)
+
+
+            
+gchvd 0 { d
+gchvd 1 { d
+
+
+
+   0 _5
+   _8 8
+            
+   + 0 _5
+0 _5
+   - 0 _5
+0 5
+   | 0 _5
+0 5
+   |~ 0 _5
+0 0
+   * 0 _5 
+0 _1
+   * 0 _5 1
+0 _1 1
+   0 % 0
+0
+   (0 _5) % * 0 _5
+0 5
+   (0 5) % * 0 _5
+0 _5
+   >./ | 0 _5
+5
+   0 { d
+9 0 9 5
+   
+gchvd 0 { d
+
+   0 _5
+      
+gchvd =: 3 : 0
+  offset =: -/ 2 2 $ y
+  NB. difference between initial and final coords of the line
+
+  onestep =: * offset
+  NB. how many to add for each step
+
+  steps =: >./ | offset
+  NB. how many steps to take
+
+  
+)
+
+
+            
+gchvd 0 { d
+
+   5
+      
+gchvd =: 3 : 0
+  offset =: -/ 2 2 $ y
+  NB. difference between initial and final coords of the line
+
+  onestep =: * offset
+  NB. how many to add for each step
+
+  steps =: >./ | offset
+  NB. how many steps to take
+
+  y + onestep */ i. 1 + steps
+)
+
+gchvd 0 { d
+gchvd 1 { d
+
+
+         |length error: gchvd
+|   y    +onestep*/i.1+steps
+   |length error: gchvd
+|   y    +onestep*/i.1+steps
+         
+  y + onestep */ i. 1 + steps
+
+   |length error
+|   y    +onestep*/i.1+steps
+      
+  onestep */ i. 1 + steps
+
+   0 _1 _2 _3 _4 _5 _6 _7 _8
+0  1  2  3  4  5  6  7  8
+      onestep
+_1 1
+   1 { d
+0 8 8 0
+   
+gchvd 0 { d
+
+   |length error: gchvd
+|   y    +onestep*/i.1+steps
+      
+gchvd =: 3 : 0
+  offset =: -/ 2 2 $ y
+  NB. difference between initial and final coords of the line
+
+  onestep =: * offset
+  NB. how many to add for each step
+
+  steps =: >./ | offset
+  NB. how many steps to take
+
+  onestep * i. 1 + steps
+)
+
+
+   gchvd 0 { d         
+      gchvd 0 { d         
+|length error: gchvd
+|   onestep    *i.1+steps
+   
+  onestep */ i. 1 + steps
+
+   0  0  0  0  0  0
+0 _1 _2 _3 _4 _5
+      
+  (2 {. y) + onestep */ i. 1 + steps
+
+   36 36 36 36 36 36
+72 71 70 69 68 67
+      y
+36 72 21 72
+   
+gchvd =: 3 : 0
+  offset =: -/ 2 2 $ y
+  NB. difference between initial and final coords of the line
+
+  onestep =: * offset
+  NB. how many to add for each step
+
+  steps =: >./ | offset
+  NB. how many steps to take
+
+  (2 {. y) + onestep */ i. 1 + steps
+  
+)
+
+
+            
+gchvd 0 { d
+
+   9  9  9  9  9  9
+0 _1 _2 _3 _4 _5
+      0 { d
+9 0 9 5
+   offset
+0 _5
+   
+gchvd =: 3 : 0
+  offset =: -/ 2 2 $ y
+  NB. difference between initial and final coords of the line
+
+  onestep =: * offset
+  NB. how many to add for each step
+
+  steps =: >./ | offset
+  NB. how many steps to take
+
+  (2 {. y) + onestep */ i. 1 + steps
+  
+)
+
+
+            
+gchvd 0 { d
+
+   9  9  9  9  9  9
+0 _1 _2 _3 _4 _5
+      onestep
+0 _1
+   y =: 0 { d
+   
+  offset =: -/ 2 2 $ y
+
+         
+  ] offset =: -/ 2 2 $ y
+
+   0 _5
+      0 { d
+9 0 9 5
+   
+gchvd =: 3 : 0
+  offset =: -/ 2 2 $ y
+  NB. difference between initial and final coords of the line
+
+  onestep =: * offset
+  NB. how many to add for each step
+
+  steps =: >./ | offset
+  NB. how many steps to take
+
+  (2 }. y) + onestep */ i. 1 + steps
+  
+)
+
+gchvd 0 { d
+
+
+         9 9 9 9 9 9
+5 4 3 2 1 0
+         
+gchvd =: 3 : 0
+  offset =: -/ 2 2 $ y
+  NB. difference between initial and final coords of the line
+
+  onestep =: * offset
+  NB. how many to add for each step
+
+  steps =: >./ | offset
+  NB. how many steps to take
+
+  |. (2 }. y) + onestep */ i. 1 + steps
+  
+)
+
+gchvd 0 { d
+
+
+         5 4 3 2 1 0
+9 9 9 9 9 9
+         
+gchvd =: 3 : 0
+  offset =: -/ 2 2 $ y
+  NB. difference between initial and final coords of the line
+
+  onestep =: * offset
+  NB. how many to add for each step
+
+  steps =: >./ | offset
+  NB. how many steps to take
+
+  _2 <\ , |: (2 }. y) + onestep */ i. 1 + steps
+  
+)
+
+gchvd 0 { d
+
+
+         +---+---+---+---+---+---+
+|9 5|9 4|9 3|9 2|9 1|9 0|
++---+---+---+---+---+---+
+         
+gchvd 1 { d
+
+   +---+---+---+---+---+---+---+---+---+
+|8 0|7 1|6 2|5 3|4 4|3 5|2 6|1 7|0 8|
++---+---+---+---+---+---+---+---+---+
+      
+answer05b =: 3 : 0
+  clean_numbers =: (' -> '; ' ' ; ',' ; ' ') stringreplace y
+  lines =: +/ LF = y
+  d_raw =: (lines, 4) $ ". eliminateLF clean_numbers
+
+  N =: 1 + >./ , d_raw
+
+  d =: 1 0 3 2 {"1 d_raw
+  NB. transposed, so the coords in each row are y1 x1 y2 x2
+  
+  amcn =: gchvd each _4 <\ , d
+  NB. amend_coordinates_with_nulls
+  NB. apply gchv to each row of d, producing (boxed) list of boxed coordlists
+  NB. some elements of amcn are empty boxes.  Strip them out:
+  amc =: (0 < > # each amcn) # amcn
+
+  +/ , 1 < +/ > N amendboard each amc
+  NB. calculate final answer
+)
+
+
+
+
+answer05b =: 3 : 0
+  clean_numbers =: (' -> '; ' ' ; ',' ; ' ') stringreplace y
+  lines =: +/ LF = y
+  d_raw =: (lines, 4) $ ". eliminateLF clean_numbers
+
+  N =: 1 + >./ , d_raw
+
+  d =: 1 0 3 2 {"1 d_raw
+  NB. transposed, so the coords in each row are y1 x1 y2 x2
+  
+  amcn =: gchvd each _4 <\ , d
+  NB. amend_coordinates_with_nulls
+  NB. apply gchv to each row of d, producing (boxed) list of boxed coordlists
+  NB. some elements of amcn are empty boxes.  Strip them out:
+  amc =: (0 < > # each amcn) # amcn
+   
+  +/ , 1 < +/ > N amendboard each amc
+  NB. calculate final answer
+)
+
+
+
+            
+   answer05b t
+12
+   answer05b i
+18605
+   
+gchvd =: 3 : 0
+  offset =: - -/ 2 2 $ y
+  NB. difference between initial and final coords of the line
+
+  onestep =: * offset
+  NB. how many to add for each step
+
+  steps =: >./ | offset
+  NB. how many steps to take
+
+  _2 <\ , |: (2 {. y) + onestep */ i. 1 + steps
+  
+)
+
+gchvd 0 { d
+gchvd 1 { d
+
+
+
+
+gchvd =: 3 : 0
+  offset =: - -/ 2 2 $ y
+  NB. difference between initial and final coords of the line
+
+  onestep =: * offset
+  NB. how many to add for each step
+
+  steps =: >./ | offset
+  NB. how many steps to take
+
+  _2 <\ , |: (2 {. y) +    onestep */ i. 1 + steps
+  
+)
+
+gchvd 0 { d
+gchvd 1 { d
+
+
+
+      +-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------...
+|187 445|188 446|189 447|190 448|191 449|192 450|193 451|194 452|195 453|196 454|197 455|198 456|199 457|200 458|201 459|202 460|203 461|204 462|205 463|206 464|207 465|208 466|209 467|210 468|211 469|212 470|213 471|214 472|215 473|216 474|217 475|218 476...
++-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------...
+   +------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+---...
+|46 820|47 819|48 818|49 817|50 816|51 815|52 814|53 813|54 812|55 811|56 810|57 809|58 808|59 807|60 806|61 805|62 804|63 803|64 802|65 801|66 800|67 799|68 798|69 797|70 796|71 795|72 794|73 793|74 792|75 791|76 790|77 789|78 788|79 787|80 786|81 785|82 ...
++------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+------+---...
+            answer05b t
+12
+   
+
+gchvd 0 { d
+gchvd 1 { d
+
+
+
+      +---+---+---+---+---+---+
+|9 0|9 1|9 2|9 3|9 4|9 5|
++---+---+---+---+---+---+
+   +---+---+---+---+---+---+---+---+---+
+|0 8|1 7|2 6|3 5|4 4|5 3|6 2|7 1|8 0|
++---+---+---+---+---+---+---+---+---+
+            0 e. 1 2
+0
+   0 e. 1 2 0
+1
+   
+gchv2 =: 3 : 0
+  offset =: - -/ 2 2 $ y
+  NB. difference between initial and final coords of the line
+
+  if. 0 e. offset
+  do.
+
+  onestep =: * offset
+  NB. how many to add for each step
+
+  steps =: >./ | offset
+  NB. how many steps to take
+
+  _2 <\ , |: (2 {. y) + onestep */ i. 1 + steps
+  end.
+)  
+
+
+            
+gchv2 0 { d
+
+   +---+---+---+---+---+---+
+|9 0|9 1|9 2|9 3|9 4|9 5|
++---+---+---+---+---+---+
+      
+gchv2 1 { d
+
+   8 _8
+      < _
++-+
+|_|
++-+
+   
+gchv2 =: 3 : 0
+  offset =: - -/ 2 2 $ y
+  NB. difference between initial and final coords of the line
+
+  if. 0 e. offset
+  do.
+
+  onestep =: * offset
+  NB. how many to add for each step
+
+  steps =: >./ | offset
+  NB. how many steps to take
+
+  _2 <\ , |: (2 {. y) + onestep */ i. 1 + steps
+  else.
+    _
+  end.
+)  
+
+
+gchv2 0 { d
+gchv2 1 { d
+
+
+
+            +---+---+---+---+---+---+
+|9 0|9 1|9 2|9 3|9 4|9 5|
++---+---+---+---+---+---+
+   _
+            
+answer05a3 =: 3 : 0
+  clean_numbers =: (' -> '; ' ' ; ',' ; ' ') stringreplace y
+  lines =: +/ LF = y
+  d_raw =: (lines, 4) $ ". eliminateLF clean_numbers
+
+  N =: 1 + >./ , d_raw
+
+  d =: 1 0 3 2 {"1 d_raw
+  NB. transposed, so the coords in each row are y1 x1 y2 x2
+  
+  amcn =: gchv2 each _4 <\ , d
+  NB. amend_coordinates_with_nulls
+  NB. apply gchv to each row of d, producing (boxed) list of boxed coordlists
+  NB. some elements of amcn are empty boxes.  Strip them out:
+  amc =: (0 < > # each amcn) # amcn
+
+  +/ , 1 < +/ > N amendboard each amc
+  NB. calculate final answer
+)
+
+
+
+answer05a3 =: 3 : 0
+  clean_numbers =: (' -> '; ' ' ; ',' ; ' ') stringreplace y
+  lines =: +/ LF = y
+  d_raw =: (lines, 4) $ ". eliminateLF clean_numbers
+
+  N =: 1 + >./ , d_raw
+
+  d =: 1 0 3 2 {"1 d_raw
+  NB. transposed, so the coords in each row are y1 x1 y2 x2
+  
+  amcn =: gchv2 each _4 <\ , d
+  NB. amend_coordinates_with_nulls
+  NB. apply gchv to each row of d, producing (boxed) list of boxed coordlists
+  NB. some elements of amcn are empty boxes.  Strip them out:
+  amc =: (0 < >    # each amcn) # amcn
+
+  +/ , 1 < +/ > N amendboard each amc
+  NB. calculate final answer
+)
+
+
+         answer05a3 t
+|domain error: amendboard
+|   1     y}(x,x)$0
+   
+gchv2 =: 3 : 0
+  if. 0 e. - -/ 2 2 $ y
+  do.
+
+  onestep =: * offset
+  NB. how many to add for each step
+
+  steps =: >./ | offset
+  NB. how many steps to take
+
+  _2 <\ , |: (2 {. y) + onestep */ i. 1 + steps
+  end.
+)
+
+
+            
+gchv2 0 { d
+
+   +---+---+---+---+
+|9 0|8 1|7 2|6 3|
++---+---+---+---+
+      
+gchv2 1 { d
+
+         answer05a3 t
+|index error: amendboard
+|   1     y}(x,x)$0
+   d
+9 0 9 5
+0 8 8 0
+4 9 4 3
+2 2 1 2
+0 7 4 7
+4 6 0 2
+9 0 9 2
+4 3 4 1
+0 0 8 8
+5 5 2 8
+   gchv2 each _4 <\ . d
+|domain error
+|   gchv2 each _4<\     .d
+   gchv2 each _4 <\ , d
++-----------------++--------------------+------------------+---------------------++-----------------+-----------------+++
+|+---+---+---+---+||+---+----+----+----+|+---+---+---+----+|+---+----+----+-----+||+---+---+---+---+|+---+---+---+---+|||
+||9 0|8 1|7 2|6 3||||4 9|3 10|2 11|1 12|||2 2|1 3|0 4|_1 5|||0 7|_1 8|_2 9|_3 10||||9 0|8 1|7 2|6 3|||4 3|3 4|2 5|1 6||||
+|+---+---+---+---+||+---+----+----+----+|+---+---+---+----+|+---+----+----+-----+||+---+---+---+---+|+---+---+---+---+|||
++-----------------++--------------------+------------------+---------------------++-----------------+-----------------+++
+   
+iffn =: 3 : 0
+  xx =: 2
+  if. y < 2
+  do.
+    3 * y
+  end.
+)
+
+         iffn/ i. 3
+|domain error: iffn
+|       iffn/i.3
+   iffn 1
+3
+	  
+   iffn 2
+2
+   iffn 3
+2
+   iffn 4
+2
+   1 + ]: x =: 2
+|spelling error
+|   1 + ]: x =: 2
+|       ^
+   1 + x =: 2
+3
+   1 + ]: x =: 2
+|spelling error
+|   1 + ]: x =: 2
+|       ^
+   
+gchv2 =: 3 : 0
+  ]: offset =: - -/ 2 2 $ y
+  if. 0 e. offset
+  do.
+  onestep =: * offset
+  NB. how many to add for each step
+
+  steps =: >./ | offset
+  NB. how many steps to take
+
+  _2 <\ , |: (2 {. y) + onestep */ i. 1 + steps
+  end.
+)
+
+
+gchv2 0 { d
+gchv2 1 { d
+
+
+   |spelling error
+|   ]: offset =: - -/ 2 2 $ y
+|   ^
+|   gchv2=:3     :0
+         +---+---+---+---+
+|9 0|8 1|7 2|6 3|
++---+---+---+---+
+            
+   
+gchv2 =: 3 : 0
+  ]: offset =: - -/ 2 2 $ y
+  if. 0 e. offset
+  do.
+  onestep =: * offset
+  NB. how many to add for each step
+
+  steps =: >./ | offset
+  NB. how many steps to take
+
+  _2 <\ , |: (2 {. y) + onestep */ i. 1 + steps
+  end.
+)
+
+
+gchv2 0 { d
+gchv2 1 { d
+
+
+   |spelling error
+|   ]: offset =: - -/ 2 2 $ y
+|   ^
+|   gchv2=:3     :0
+         +---+---+---+---+
+|9 0|8 1|7 2|6 3|
++---+---+---+---+
+            
+gchv2 =: 3 : 0
+  ]: offset =: - -/ 2 2 $ y
+  if. 0 e. offset
+  do.
+  onestep =: * offset
+  NB. how many to add for each step
+
+  steps =: >./ | offset
+  NB. how many steps to take
+
+  _2 <\ , |: (2 {. y) + onestep */ i. 1 + steps
+  end.
+)
+
+
+   |spelling error
+|   ]: offset =: - -/ 2 2 $ y
+|   ^
+|   gchv2=:3     :0
+         

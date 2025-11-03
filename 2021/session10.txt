@@ -1,0 +1,1492 @@
+   10 ? 10
+9 8 3 0 6 1 2 5 4 7
+   500 * 1001
+500500
+   +/ i. 1001
+500500
+   z =: 10 $ 0
+   3 2 } z
+|rank error
+|       3 2}z
+   3 (2 }) z
+0 0 3 0 0 0 0 0 0 0
+   3 4 (2 4 }) z
+0 0 3 0 4 0 0 0 0 0
+   3 4 (4 }) z
+|rank error
+|   3 4    (4})z
+   4 (2 4 }) z
+0 0 4 0 4 0 0 0 0 0
+   zm =: 4 4 $ 0
+   zm
+0 0 0 0
+0 0 0 0
+0 0 0 0
+0 0 0 0
+   1 (2 3 }) zz
+(1) 2 3} zz
+   1 (2 3 }) zm
+0 0 0 0
+0 0 0 0
+1 1 1 1
+1 1 1 1
+   1 ((( 2 3) }) zm
+|length error
+|   1(    ((2 3)})zm
+   1 ((< 2 3) }) zm
+0 0 0 0
+0 0 0 0
+0 0 0 1
+0 0 0 0
+   1 ((2 3; 1 1) }) zm
+0 0 0 0
+0 1 0 0
+0 0 0 1
+0 0 0 0
+   7 8  ((2 3; 1 1) }) zm
+0 0 0 0
+0 8 0 0
+0 0 0 7
+0 0 0 0
+   
+points =: 3 57 1197 25137
+
+         1 2 3 4 e. 3 4 5 6
+0 0 1 1
+   }. 1 2 3 4
+2 3 4
+   2 E. 1 2 3 4
+0 1 0 0
+   2 = 1 2 3 4
+0 1 0 0
+   1 2 3 4 E. 2
+|rank error
+|   1 2 3 4     E.2
+   2 I.@E. 1 2 3 4
+1
+    6 I.@E. 6 5 4 3 2 1
+0
+   5 I.@E. 6 5 4 3 2 1
+1
+   3 I.@E. 6 5 4 3 2 1
+3
+   3 E. 6 5 4 3 2 1
+0 0 0 1 0 0
+   I. 3 E. 6 5 4 3 2 1
+3
+   I. 0 1 0 0 
+1
+   I. 0 0 1 0 
+2
+   I. 0 1 0 0 1
+1 4
+   
+open_to_close =: 3 : 0
+  (opens = y) # closes
+)
+
+
+            (i. 4) ; i. 5
++-------+---------+
+|0 1 2 3|0 1 2 3 4|
++-------+---------+
+   (0 $ 0) ; '([])'
+++----+
+||([])|
+++----+
+   {. 1 2 3
+1
+   {: 1 2 3
+3
+   }: 1 2 3
+1 2
+   }. 1
+
+   $ }. 1
+0
+   
+parse =: 3 : 0
+  NB. two things, boxed
+  stack =: > 0 { y
+  string =: > 1 { y
+  if. #string > 0
+  do.
+    c =. (0 { string)
+    if. c e. opens
+    do.
+      (stack , open_to_close c) ; }. string
+    elseif. c e. closes
+      if. ({: stack) = c
+      do.
+	 (}: stack) ; (}. string)
+	 NB. close-delimiter matches innermost open-delimiter
+	 NB. so we pop it off the stack and continue
+      elseif.
+      do.
+        stack ; 0 $ 'a'
+      end.
+    end.
+  else.
+    stack ; string
+  end.
+)
+
+
+
+parse =: 3 : 0
+  NB. two things, boxed
+  stack =: > 0 { y
+  string =: > 1 { y
+  if. #string > 0
+  do.
+    c =. (0 { string)
+    if. c e. opens
+    do.
+      (stack , open_to_close c) ; }. string
+    elseif. c e. closes
+      if. ({: stack) = c
+      do.
+	 (}: stack) ; (}. string)
+	 NB. close-delimiter matches innermost open-delimiter
+	 NB. so we pop it off the stack and continue
+      elseif.
+      do.
+           stack ; 0 $ 'a'
+      end.
+    end.
+  else.
+    stack ; string
+  end.
+)
+
+
+|control error
+|   [19]    end.
+|   parse=:3     :0
+         
+parse =: 3 : 0
+  NB. two things, boxed
+  stack =: > 0 { y
+  string =: > 1 { y
+  if. #string > 0
+  do.
+    c =. (0 { string)
+    if. c e. opens
+    do.
+      (stack , open_to_close c) ; }. string
+    elseif. c e. closes
+    do.
+      if. ({: stack) = c
+      do.
+	 (}: stack) ; (}. string)
+	 NB. close-delimiter matches innermost open-delimiter
+	 NB. so we pop it off the stack and continue
+      else.
+        stack ; 0 $ 'a'
+      end.
+    end.
+  else.
+    stack ; string
+  end.
+)
+
+
+
+parse =: 3 : 0
+  NB. two things, boxed
+  stack =: > 0 { y
+  string =: > 1 { y
+  if. #string > 0
+  do.
+    c =. (0 { string)
+    if. c e. opens
+    do.
+      (stack , open_to_close c) ; }. string
+    elseif. c e. closes
+    do.
+      if. ({: stack) = c
+      do.
+	 (}: stack) ; (}. string)
+	 NB. close-delimiter matches innermost open-delimiter
+	 NB. so we pop it off the stack and continue
+      else.
+        stack ; 0 $ 'a'
+      end.
+    end.
+  else.
+    stack ; string
+  end.
+)
+   
+
+         
+   parse (0 $ 0) ; '{([(<{}[<>[]}>{[]{[(<()>'
+|domain error: parse
+|   #string    >0
+   (0 $ 0) ; '{([(<{}[<>[]}>{[]{[(<()>'
+++------------------------+
+||{([(<{}[<>[]}>{[]{[(<()>|
+++------------------------+
+   0 { (0 $ 0) ; '{([(<{}[<>[]}>{[]{[(<()>'
+++
+||
+++
+   > 0 { (0 $ 0) ; '{([(<{}[<>[]}>{[]{[(<()>'
+
+   > 1 { (0 $ 0) ; '{([(<{}[<>[]}>{[]{[(<()>'
+{([(<{}[<>[]}>{[]{[(<()>
+   string
+{([(<{}[<>[]}>{[]{[(<()>
+   
+parse =: 3 : 0
+  NB. two things, boxed
+  stack =: > 0 { y
+  string =: > 1 { y
+  if. 0 < # string
+  do.
+    c =. (0 { string)
+    if. c e. opens
+    do.
+      (stack , open_to_close c) ; }. string
+    elseif. c e. closes
+    do.
+      if. ({: stack) = c
+      do.
+	 (}: stack) ; (}. string)
+	 NB. close-delimiter matches innermost open-delimiter
+	 NB. so we pop it off the stack and continue
+      else.
+        stack ; 0 $ 'a'
+      end.
+    end.
+  else.
+    stack ; string
+  end.
+)
+
+
+
+parse =: 3 : 0
+  NB. two things, boxed
+  stack =: > 0 { y
+  string =: > 1 { y
+  if. 0 < # string
+  do.
+    c =. (0 { string)
+    if. c e. opens
+    do.
+      (stack , open_to_close c) ; }. string
+    elseif. c e. closes
+    do.
+      if. ({: stack) = c
+      do.
+	 (}: stack) ; (}. string)
+	 NB. close-delimiter matches innermost open-delimiter
+	 NB. so we pop it off the stack and continue
+      else.
+        stack ; 0 $ 'a'
+      end.
+    end.
+  else.
+    stack ; string   
+  end.
+)
+
+
+         
+   > 1 { (0 $ 0) ; '{([(<{}[<>[]}>{[]{[(<()>'
+{([(<{}[<>[]}>{[]{[(<()>
+   parse (0 $ 0) ; '{([(<{}[<>[]}>{[]{[(<()>'
+|noun result was required: parse
+|       c e.opens
+   
+opens =: '([{<'
+closes =: ')]}>'
+
+
+               
+   parse (0 $ 0) ; '{([(<{}[<>[]}>{[]{[(<()>'
++-+-----------------------+
+|}|([(<{}[<>[]}>{[]{[(<()>|
++-+-----------------------+
+   parse^:a: (0 $ 0) ; '{([(<{}[<>[]}>{[]{[(<()>'
++-------+------------------------+
+|       |{([(<{}[<>[]}>{[]{[(<()>|
++-------+------------------------+
+|}      |([(<{}[<>[]}>{[]{[(<()> |
++-------+------------------------+
+|})     |[(<{}[<>[]}>{[]{[(<()>  |
++-------+------------------------+
+|})]    |(<{}[<>[]}>{[]{[(<()>   |
++-------+------------------------+
+|})])   |<{}[<>[]}>{[]{[(<()>    |
++-------+------------------------+
+|})])>  |{}[<>[]}>{[]{[(<()>     |
++-------+------------------------+
+|})])>} |}[<>[]}>{[]{[(<()>      |
++-------+------------------------+
+|})])>  |[<>[]}>{[]{[(<()>       |
++-------+------------------------+
+|})])>] |<>[]}>{[]{[(<()>        |
++-------+------------------------+
+|})])>]>|>[]}>{[]{[(<()>         |
++-------+------------------------+
+|})])>] |[]}>{[]{[(<()>          |
++-------+------------------------+
+|})])>]]|]}>{[]{[(<()>           |
++-------+------------------------+
+|})])>] |}>{[]{[(<()>            |
++-------+------------------------+
+|})])>] |                        |
++-------+------------------------+
+   parse^:a: (0 $ 0) ; '{([(<{}[<>[]}>{[]{[(<()>'
+g =: [<>({}){}[([])<>]]
+
++-------+------------------------+
+|       |{([(<{}[<>[]}>{[]{[(<()>|
++-------+------------------------+
+|}      |([(<{}[<>[]}>{[]{[(<()> |
++-------+------------------------+
+|})     |[(<{}[<>[]}>{[]{[(<()>  |
++-------+------------------------+
+|})]    |(<{}[<>[]}>{[]{[(<()>   |
++-------+------------------------+
+|})])   |<{}[<>[]}>{[]{[(<()>    |
++-------+------------------------+
+|})])>  |{}[<>[]}>{[]{[(<()>     |
++-------+------------------------+
+|})])>} |}[<>[]}>{[]{[(<()>      |
++-------+------------------------+
+|})])>  |[<>[]}>{[]{[(<()>       |
++-------+------------------------+
+|})])>] |<>[]}>{[]{[(<()>        |
++-------+------------------------+
+|})])>]>|>[]}>{[]{[(<()>         |
++-------+------------------------+
+|})])>] |[]}>{[]{[(<()>          |
++-------+------------------------+
+|})])>]]|]}>{[]{[(<()>           |
++-------+------------------------+
+|})])>] |}>{[]{[(<()>            |
++-------+------------------------+
+|})])>] |                        |
++-------+------------------------+
+         parse^:a: (0$0) ; g
+parse^:a: ((0$0) ; g)
+     C-c C-c^C
+     C-c C-c^C  C-c C-c^C
+   g
+[ < > {} {} [ ([ ]) < > ] ]
+   (0$0) ; g
+(0$0) ; g
+   g
+[ < > {} {} [ ([ ]) < > ] ]
+   
+g =: '[<>({}){}[([])<>]]'
+
+         g
+[<>({}){}[([])<>]]
+   parse^:a: (0$0) ; g
++----+------------------+
+|    |[<>({}){}[([])<>]]|
++----+------------------+
+|]   |<>({}){}[([])<>]] |
++----+------------------+
+|]>  |>({}){}[([])<>]]  |
++----+------------------+
+|]   |({}){}[([])<>]]   |
++----+------------------+
+|])  |{}){}[([])<>]]    |
++----+------------------+
+|])} |}){}[([])<>]]     |
++----+------------------+
+|])  |){}[([])<>]]      |
++----+------------------+
+|]   |{}[([])<>]]       |
++----+------------------+
+|]}  |}[([])<>]]        |
++----+------------------+
+|]   |[([])<>]]         |
++----+------------------+
+|]]  |([])<>]]          |
++----+------------------+
+|]]) |[])<>]]           |
++----+------------------+
+|]])]|])<>]]            |
++----+------------------+
+|]]) |)<>]]             |
++----+------------------+
+|]]  |<>]]              |
++----+------------------+
+|]]> |>]]               |
++----+------------------+
+|]]  |]]                |
++----+------------------+
+|]   |]                 |
++----+------------------+
+|    |                  |
++----+------------------+
+   5 i. 4 5 6
+1 0 1
+   5 I. 4 5 6
+0 0 1
+   5 E. 4 5 6
+0 1 0
+   5 I.@E. 6 5 4
+1
+   g
+[<>({}){}[([])<>]]
+   
+parse2 =: 3 : 0
+  NB. two things, boxed
+  stack =: 0 $ 0
+  string =: y
+  while. 0 < # string
+  NB. while string is nonempty
+  do.
+    c =. (0 { string)
+    if. c e. opens
+    do.
+      stack =. stack , open_to_close c
+      string =. }. string
+    elseif. c e. closes
+    do.
+      if. ({: stack) = c
+      do.
+	 NB. close-delimiter matches innermost open-delimiter
+	 NB. so we pop it off the stack and continue
+         stack =. }: stack
+	 NB. pop stack
+	 string =. }. string
+	 NB. go to next char of string
+      else.
+	NB. we found a bad character
+	NB. return its badness score
+        (c I.@E. closes) { 3 57 1197 25137 return.
+      end.
+    end.
+  else.
+    if. 0 < # stack
+    do.
+      0 return.  NB. string is empty, stack is empty: correct parse
+    else.
+      _1 return.  NB. stack is empty but stack is nonempty; incomplete string
+    end.
+  end.
+)
+
+
+
+parse2 =: 3 : 0
+  NB. two things, boxed
+  stack =: 0 $ 0
+  string =: y
+  while. 0 < # string
+  NB. while string is nonempty
+  do.
+    c =. (0 { string)
+    if. c e. opens
+    do.
+      stack =. stack , open_to_close c
+      string =. }. string
+    elseif. c e. closes
+    do.
+      if. ({: stack) = c
+      do.
+	 NB. close-delimiter matches innermost open-delimiter
+	 NB. so we pop it off the stack and continue
+         stack =. }: stack
+	 NB. pop stack
+	 string =. }. string
+	 NB. go to next char of string
+      else.
+	NB. we found a bad character
+	NB. return its badness score
+        (c I.@E. closes) { 3 57 1197 25137 r   eturn.
+      end.
+    end.
+  else.
+    if. 0 < # stack
+    do.
+      0 return.  NB. string is empty, stack is empty: correct parse
+    else.
+      _1 return.  NB. stack is empty but stack is nonempty; incomplete string
+    end.
+  end.
+)
+
+
+|control error
+|   [27]  else.
+|   parse2=:3     :0
+         
+parse2 =: 3 : 0
+  NB. two things, boxed
+  stack =. 0 $ 0
+  string =. y
+  while. 0 < # string
+  NB. while string is nonempty
+  do.
+    c =. (0 { string)
+    if. c e. opens
+    NB. found an open-delimiter
+    do.
+      NB. save its complement on the stack
+      stack =. stack , open_to_close c
+    elseif. c e. closes
+    do.
+      if. ({: stack) = c
+      do.
+	 NB. close-delimiter matches innermost open-delimiter
+	 NB. so we pop it off the stack and continue
+         stack =. }: stack
+	 NB. pop stack
+      else.
+	NB. we found a bad character
+	NB. return its badness score
+        (c I.@E. closes) { 3 57 1197 25137 return.
+      end.
+    end.
+    string =. }. string
+  end.
+  if. 0 = # stack
+  do.
+    0 return.  NB. string is empty, stack is empty: correct parse
+  else.
+    _1 return.  NB. stack is empty but stack is nonempty; incomplete string
+  end.
+)
+
+
+
+parse2 =: 3 : 0
+  NB. two things, boxed
+  stack =. 0 $ 0
+  string =. y
+  while. 0 < # string
+  NB. while string is nonempty
+  do.
+    c =. (0 { string)
+    if. c e. opens
+    NB. found an open-delimiter
+    do.
+      NB. save its complement on the stack   
+      stack =. stack , open_to_close c
+    elseif. c e. closes
+    do.
+      if. ({: stack) = c
+      do.
+	 NB. close-delimiter matches innermost open-delimiter
+	 NB. so we pop it off the stack and continue
+         stack =. }: stack
+	 NB. pop stack
+      else.
+	NB. we found a bad character
+	NB. return its badness score
+        (c I.@E. closes) { 3 57 1197 25137 return.
+      end.
+    end.
+    string =. }. string
+  end.
+  if. 0 = # stack
+  do.
+    0 return.  NB. string is empty, stack is empty: correct parse
+  else.
+    _1 return.  NB. stack is empty but stack is nonempty; incomplete string
+  end.
+)
+
+
+         
+   parse2 g
+0
+   t
+|value error: t
+   tt
+|value error: tt
+   t =: readfile < jpath '~/Downloads/test-2021-10.txt'
+|value error: readfile
+|   t=:    readfile<jpath'~/Downloads/test-2021-10.txt'
+   
+readfile =: 1!:1
+
+load 'strings'
+
+load 'regex'
+
+load 'text'
+
+eliminatecommas =: 3 : 0
+  ' ' ((',' = y) # (i. # y)) } y
+)
+
+eliminateLF =: 3 : 0
+  ' ' ((LF = y) # (i. # y)) } y
+)
+
+delims =:'([{<>}])'
+
+opens =: '([{<'
+closes =: ')]}>'
+
+
+                                                         
+   t =: readfile < jpath '~/Downloads/test-2021-10.txt'
+   t
+[({(<(())[]>[[{[]{<()<>>
+[(()[<>])]({[<{<<[]>>(
+{([(<{}[<>[]}>{[]{[(<()>
+(((({<>}<{<{<>}{[]{[]{}
+[[<[([]))<([[{}[[()]]]
+[{[{({}]{}}([{[{{{}}([]
+{<[[]]>}<{[{[{[]{()[[[]
+[<(<(<(<{}))><([]([]()
+<{([([[(<>()){}]>(<<{{
+<{([{{}}[<[[[<>{}]]]>[]]
+
+   {: LF stringsplit t
+|value error: stringsplit
+|   {:LF     stringsplit t
+   {: LF splitstring t
+++
+||
+++
+   LF splitstring t
++------------------------+----------------------+------------------------+-----------------------+----------------------+-----------------------+-----------------------+----------------------+----------------------+------------------------++
+|[({(<(())[]>[[{[]{<()<>>|[(()[<>])]({[<{<<[]>>(|{([(<{}[<>[]}>{[]{[(<()>|(((({<>}<{<{<>}{[]{[]{}|[[<[([]))<([[{}[[()]]]|[{[{({}]{}}([{[{{{}}([]|{<[[]]>}<{[{[{[]{()[[[]|[<(<(<(<{}))><([]([]()|<{([([[(<>()){}]>(<<{{|<{([{{}}[<[[[<>{}]]]>[]]||
++------------------------+----------------------+------------------------+-----------------------+----------------------+-----------------------+-----------------------+----------------------+----------------------+------------------------++
+   |. LF splitstring t
+++------------------------+----------------------+----------------------+-----------------------+-----------------------+----------------------+-----------------------+------------------------+----------------------+------------------------+
+||<{([{{}}[<[[[<>{}]]]>[]]|<{([([[(<>()){}]>(<<{{|[<(<(<(<{}))><([]([]()|{<[[]]>}<{[{[{[]{()[[[]|[{[{({}]{}}([{[{{{}}([]|[[<[([]))<([[{}[[()]]]|(((({<>}<{<{<>}{[]{[]{}|{([(<{}[<>[]}>{[]{[(<()>|[(()[<>])]({[<{<<[]>>(|[({(<(())[]>[[{[]{<()<>>|
+++------------------------+----------------------+----------------------+-----------------------+-----------------------+----------------------+-----------------------+------------------------+----------------------+------------------------+
+   $ LF splitstring t
+11
+   11 1 $ LF splitstring t
++------------------------+
+|[({(<(())[]>[[{[]{<()<>>|
++------------------------+
+|[(()[<>])]({[<{<<[]>>(  |
++------------------------+
+|{([(<{}[<>[]}>{[]{[(<()>|
++------------------------+
+|(((({<>}<{<{<>}{[]{[]{} |
++------------------------+
+|[[<[([]))<([[{}[[()]]]  |
++------------------------+
+|[{[{({}]{}}([{[{{{}}([] |
++------------------------+
+|{<[[]]>}<{[{[{[]{()[[[] |
++------------------------+
+|[<(<(<(<{}))><([]([]()  |
++------------------------+
+|<{([([[(<>()){}]>(<<{{  |
++------------------------+
+|<{([{{}}[<[[[<>{}]]]>[]]|
++------------------------+
+|                        |
++------------------------+
+   11 1 $ }: LF splitstring t
++------------------------+
+|[({(<(())[]>[[{[]{<()<>>|
++------------------------+
+|[(()[<>])]({[<{<<[]>>(  |
++------------------------+
+|{([(<{}[<>[]}>{[]{[(<()>|
++------------------------+
+|(((({<>}<{<{<>}{[]{[]{} |
++------------------------+
+|[[<[([]))<([[{}[[()]]]  |
++------------------------+
+|[{[{({}]{}}([{[{{{}}([] |
++------------------------+
+|{<[[]]>}<{[{[{[]{()[[[] |
++------------------------+
+|[<(<(<(<{}))><([]([]()  |
++------------------------+
+|<{([([[(<>()){}]>(<<{{  |
++------------------------+
+|<{([{{}}[<[[[<>{}]]]>[]]|
++------------------------+
+|[({(<(())[]>[[{[]{<()<>>|
++------------------------+
+   11 1 $ }: LF splitstring t
+ans1 =: 3 : 0
+  strings =: }: LF splitstring t
+  parse2 each strings
+)
+
+
++------------------------+
+|[({(<(())[]>[[{[]{<()<>>|
++------------------------+
+|[(()[<>])]({[<{<<[]>>(  |
++------------------------+
+|{([(<{}[<>[]}>{[]{[(<()>|
++------------------------+
+|(((({<>}<{<{<>}{[]{[]{} |
++------------------------+
+|[[<[([]))<([[{}[[()]]]  |
++------------------------+
+|[{[{({}]{}}([{[{{{}}([] |
++------------------------+
+|{<[[]]>}<{[{[{[]{()[[[] |
++------------------------+
+|[<(<(<(<{}))><([]([]()  |
++------------------------+
+|<{([([[(<>()){}]>(<<{{  |
++------------------------+
+|<{([{{}}[<[[[<>{}]]]>[]]|
++------------------------+
+|[({(<(())[]>[[{[]{<()<>>|
++------------------------+
+            
+   
+ans1 =: 3 : 0
+  strings =: }: LF splitstring t
+  parse2 each strings
+)
+
+
+            
+   ans2 t
+|value error: ans2
+|       ans2 t
+   ans1 t
++--+--+----+--+-+--+--+-+-----+--+
+|_1|_1|1197|_1|3|57|_1|3|25137|_1|
++--+--+----+--+-+--+--+-+-----+--+
+   > ans1 t
+   _1
+   _1
+ 1197
+   _1
+    3
+   57
+   _1
+    3
+25137
+   _1
+   0 < > ans1 t
+0
+0
+1
+0
+1
+1
+0
+1
+1
+0
+   0 < , > ans1 t
+0 0 1 0 1 1 0 1 1 0
+   (0 < , a) # a =. ans1 t
+|domain error
+|   (0    <,a)#a=:ans1 t
+   (0 < , a) # a =: ans1 t
+|domain error
+|   (0    <,a)#a=:ans1 t
+   (0 < , a) # a =: ans1 t
+ans1 =: 3 : 0
+  strings =: }: LF splitstring t
+  a =: , > parse2 each strings
+  (0 < a) # a
+)
+
+
+|domain error
+|   (0    <,a)#a=:ans1 t
+            
+   ans1 t
+1197 3 57 3 25137
+   +/ ans1 t
+26397
+   
+i =: readfile < jpath '~/Downloads/input-2021-10.txt'
+
+         
+   $i
+9820
+   ans1 i
+1197 3 57 3 25137
+   
+ans1 =: 3 : 0
+  strings =: }: LF splitstring y
+  a =: , > parse2 each strings
+  (0 < a) # a
+)
+
+
+            
+   ans1 t
+1197 3 57 3 25137
+   ans1 i
+1197 3 3 57 3 25137 25137 3 57 57 1197 3 3 1197 3 3 1197 25137 1197 25137 1197 25137 25137 25137 57 57 3 1197 3 1197 3 1197 3 57 25137 3 3 57 3 1197 3 1197 57 3 1197 3 25137 57 25137
+   +/ ans1 i
+266301
+   parse^:a: '[({(<(())[]>[[{[]{<()<>>'
+|domain error
+|       parse^:a:'[({(<(())[]>[[{[]{<()<>>'
+   parse^:a: (0$0) ; '[({(<(())[]>[[{[]{<()<>>'
++----------+------------------------+
+|          |[({(<(())[]>[[{[]{<()<>>|
++----------+------------------------+
+|]         |({(<(())[]>[[{[]{<()<>> |
++----------+------------------------+
+|])        |{(<(())[]>[[{[]{<()<>>  |
++----------+------------------------+
+|])}       |(<(())[]>[[{[]{<()<>>   |
++----------+------------------------+
+|])})      |<(())[]>[[{[]{<()<>>    |
++----------+------------------------+
+|])})>     |(())[]>[[{[]{<()<>>     |
++----------+------------------------+
+|])})>)    |())[]>[[{[]{<()<>>      |
++----------+------------------------+
+|])})>))   |))[]>[[{[]{<()<>>       |
++----------+------------------------+
+|])})>)    |)[]>[[{[]{<()<>>        |
++----------+------------------------+
+|])})>     |[]>[[{[]{<()<>>         |
++----------+------------------------+
+|])})>]    |]>[[{[]{<()<>>          |
++----------+------------------------+
+|])})>     |>[[{[]{<()<>>           |
++----------+------------------------+
+|])})      |[[{[]{<()<>>            |
++----------+------------------------+
+|])})]     |[{[]{<()<>>             |
++----------+------------------------+
+|])})]]    |{[]{<()<>>              |
++----------+------------------------+
+|])})]]}   |[]{<()<>>               |
++----------+------------------------+
+|])})]]}]  |]{<()<>>                |
++----------+------------------------+
+|])})]]}   |{<()<>>                 |
++----------+------------------------+
+|])})]]}}  |<()<>>                  |
++----------+------------------------+
+|])})]]}}> |()<>>                   |
++----------+------------------------+
+|])})]]}}>)|)<>>                    |
++----------+------------------------+
+|])})]]}}> |<>>                     |
++----------+------------------------+
+|])})]]}}>>|>>                      |
++----------+------------------------+
+|])})]]}}> |>                       |
++----------+------------------------+
+|])})]]}}  |                        |
++----------+------------------------+
+   5 5 5 5 #: 2 1 3 4
+0 0 0 2
+0 0 0 1
+0 0 0 3
+0 0 0 4
+   (5 5 5 5) #: 2 1 3 4
+0 0 0 2
+0 0 0 1
+0 0 0 3
+0 0 0 4
+   (5 5 5 5) #. 2 1 3 4
+294
+   5 #~ $ 2 1 3 4
+5 5 5 5
+   5 #~ $ 2 1 3 4
+5 5 5 5
+   strings =: }: LF splitstring t
+   t
+[({(<(())[]>[[{[]{<()<>>
+[(()[<>])]({[<{<<[]>>(
+{([(<{}[<>[]}>{[]{[(<()>
+(((({<>}<{<{<>}{[]{[]{}
+[[<[([]))<([[{}[[()]]]
+[{[{({}]{}}([{[{{{}}([]
+{<[[]]>}<{[{[{[]{()[[[]
+[<(<(<(<{}))><([]([]()
+<{([([[(<>()){}]>(<<{{
+<{([{{}}[<[[[<>{}]]]>[]]
+
+   strings =: }: LF splitstring t
+   $ strings
+10
+   strings
++------------------------+----------------------+------------------------+-----------------------+----------------------+-----------------------+-----------------------+----------------------+----------------------+------------------------+
+|[({(<(())[]>[[{[]{<()<>>|[(()[<>])]({[<{<<[]>>(|{([(<{}[<>[]}>{[]{[(<()>|(((({<>}<{<{<>}{[]{[]{}|[[<[([]))<([[{}[[()]]]|[{[{({}]{}}([{[{{{}}([]|{<[[]]>}<{[{[{[]{()[[[]|[<(<(<(<{}))><([]([]()|<{([([[(<>()){}]>(<<{{|<{([{{}}[<[[[<>{}]]]>[]]|
++------------------------+----------------------+------------------------+-----------------------+----------------------+-----------------------+-----------------------+----------------------+----------------------+------------------------+
+   parse3 each strings
+|value error: parse3
+|       parse3 each strings
+   
+parse3 =: 3 : 0
+  NB. two things, boxed
+  stack =. 0 $ 0
+  string =. y
+  while. 0 < # string
+  NB. while string is nonempty
+  do.
+    c =. (0 { string)
+    if. c e. opens
+    NB. found an open-delimiter
+    do.
+      NB. save its complement on the stack
+      stack =. stack , open_to_close c
+    elseif. c e. closes
+    do.
+      if. ({: stack) = c
+      do.
+	 NB. close-delimiter matches innermost open-delimiter
+	 NB. so we pop it off the stack and continue
+         stack =. }: stack
+	 NB. pop stack
+      else.
+	NB. we found a bad character
+	NB. return 0
+        0 return.
+      end.
+    end.
+    string =. }. string
+  end.
+  if. 0 = # stack
+  do.
+    0 return.  NB. string is empty, stack is empty: correct parse
+  else.
+    NB. string is empty but stack is nonempty; incomplete string
+    scores =: (|. stack) I.@E. 1 2 3 4
+    (5 #~ $ scores) #. scores
+  end.
+)
+
+
+
+parse3 =: 3 : 0
+  NB. two things, boxed
+  stack =. 0 $ 0
+  string =. y
+  while. 0 < # string
+  NB. while string is nonempty
+  do.
+    c =. (0 { string)
+    if. c e. opens
+    NB. found an open-delimiter
+    do.
+      NB. save its complement on the stack
+      stack =. stack , open_to_close c
+    elseif. c e. closes
+    do.
+      if. ({: stack) = c
+      do.
+	 NB. close-delimiter matches innermost open-delimiter
+	 NB. so we pop it off the stack and continue
+         stack =. }   : stack
+	 NB. pop stack
+      else.
+	NB. we found a bad character
+	NB. return 0
+        0 return.
+      end.
+    end.
+    string =. }. string
+  end.
+  if. 0 = # stack
+  do.
+    0 return.  NB. string is empty, stack is empty: correct parse
+  else.
+    NB. string is empty but stack is nonempty; incomplete string
+    scores =: (|. stack) I.@E. 1 2 3 4
+    (5 #~ $ scores) #. scores
+  end.
+)
+
+
+         
+   parse3 each strings
++-+-+-+-+-+-+-+-+-+-+
+|0|0|0|0|0|0|0|0|0|0|
++-+-+-+-+-+-+-+-+-+-+
+   strings
++------------------------+----------------------+------------------------+-----------------------+----------------------+-----------------------+-----------------------+----------------------+----------------------+------------------------+
+|[({(<(())[]>[[{[]{<()<>>|[(()[<>])]({[<{<<[]>>(|{([(<{}[<>[]}>{[]{[(<()>|(((({<>}<{<{<>}{[]{[]{}|[[<[([]))<([[{}[[()]]]|[{[{({}]{}}([{[{{{}}([]|{<[[]]>}<{[{[{[]{()[[[]|[<(<(<(<{}))><([]([]()|<{([([[(<>()){}]>(<<{{|<{([{{}}[<[[[<>{}]]]>[]]|
++------------------------+----------------------+------------------------+-----------------------+----------------------+-----------------------+-----------------------+----------------------+----------------------+------------------------+
+   parse each strings
++-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+
+|+--++|+--++|+--++|+--++|+--++|+--++|+--++|+--++|+--++|+--++|
+||[)||||[)||||{)||||()||||[]||||[}||||{>||||[>||||<}||||<}|||
+|+--++|+--++|+--++|+--++|+--++|+--++|+--++|+--++|+--++|+--++|
++-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+
+   strings
++------------------------+----------------------+------------------------+-----------------------+----------------------+-----------------------+-----------------------+----------------------+----------------------+------------------------+
+|[({(<(())[]>[[{[]{<()<>>|[(()[<>])]({[<{<<[]>>(|{([(<{}[<>[]}>{[]{[(<()>|(((({<>}<{<{<>}{[]{[]{}|[[<[([]))<([[{}[[()]]]|[{[{({}]{}}([{[{{{}}([]|{<[[]]>}<{[{[{[]{()[[[]|[<(<(<(<{}))><([]([]()|<{([([[(<>()){}]>(<<{{|<{([{{}}[<[[[<>{}]]]>[]]|
++------------------------+----------------------+------------------------+-----------------------+----------------------+-----------------------+-----------------------+----------------------+----------------------+------------------------+
+   parse2 each strings
++--+--+----+--+-+--+--+-+-----+--+
+|_1|_1|1197|_1|3|57|_1|3|25137|_1|
++--+--+----+--+-+--+--+-+-----+--+
+   scores
+
+   5 5 5 5 #. 1 2 3 4
+194
+   5 5 5 5 #. 2 1 3 4
+294
+   
+parse3 =: 3 : 0
+  stack =. 0 $ 0
+  string =. y
+  while. 0 < # string
+  NB. while string is nonempty
+  do.
+    c =. (0 { string)
+    if. c e. opens
+    NB. found an open-delimiter
+    do.
+      NB. save its complement on the stack
+      stack =. stack , open_to_close c
+    elseif. c e. closes
+    do.
+      if. ({: stack) = c
+      do.
+	 NB. close-delimiter matches innermost open-delimiter
+	 NB. so we pop it off the stack and continue
+         stack =. }: stack
+	 NB. pop stack
+      else.
+	NB. we found a bad character
+	NB. return _1
+        _1 return.
+      end.
+    end.
+    string =. }. string
+  end.
+  if. 0 = # stack
+  do.
+    0 return.  NB. string is empty, stack is empty: correct parse
+  else.
+    NB. string is empty but stack is nonempty; incomplete string
+    stack return.
+  end.
+)
+
+
+
+parse3 =: 3 : 0
+  stack =. 0 $ 0
+  string =. y
+  while. 0 < # string
+  NB. while string is nonempty
+  do.
+    c =. (0 { string)
+    if. c e. opens
+    NB. found an open-delimiter
+    do.
+      NB. save its complement on the stack
+      stack =. stack , open_to_close c
+    elseif. c e. closes
+    do.
+      if. ({: stack) = c
+      do.
+	 NB. close-delimiter matches innermost open-delimiter
+	 NB. so we pop it off the stack and continue
+         stack =. }: stack
+	 NB. pop stack
+         else.
+	NB. we found a bad character
+	NB. return _1
+        _1 return.
+      end.
+    end.
+    string =. }. string
+  end.
+  if. 0 = # stack
+  do.
+    0 return.  NB. string is empty, stack is empty: correct parse
+  else.
+    NB. string is empty but stack is nonempty; incomplete string
+    stack return.
+  end.
+)
+
+
+         
+   parse3 each strings
++--------+------+--+---------+--+--+---------+--+--+----+
+|])})]]}}|)}]>})|_1|))))>}>}}|_1|_1|>}]}]}}]]|_1|_1|>})]|
++--------+------+--+---------+--+--+---------+--+--+----+
+   pp =: parse3 each strings
+   |. each pp
++--------+------+--+---------+--+--+---------+--+--+----+
+|}}]])})]|)}>]})|_1|}}>}>))))|_1|_1|]]}}]}]}>|_1|_1|])}>|
++--------+------+--+---------+--+--+---------+--+--+----+
+   scorestring each |. each pp
+scorestring =: 3 : 0
+  ] s =. (|. y) I.@E. 1 2 3 4
+  NB. (5 #~ $ s) #. s
+)
+
+
++--------+------+--+---------+--+--+---------+--+--+----+
+|}}]])})]|)}>]})|_1|}}>}>))))|_1|_1|]]}}]}]}>|_1|_1|])}>|
++--------+------+--+---------+--+--+---------+--+--+----+
+            scorestring each |. each pp
+scorestring =: 3 : 0
+  ] s =. (|. y) I.@E. 1 2 3 4
+  NB. (5 #~ $ s) #. s
+)
+
+
++++++++++++
+|||||||||||
++++++++++++
+            |. each pp
++--------+------+--+---------+--+--+---------+--+--+----+
+|}}]])})]|)}>]})|_1|}}>}>))))|_1|_1|]]}}]}]}>|_1|_1|])}>|
++--------+------+--+---------+--+--+---------+--+--+----+
+   13 : '(|. y) I.@E. 1 2 3 4'
+1 2 3 4 I.@E.~ |.
+   1 2 3 4 I.@E.~ |. each pp
+
+   
+   1 2 3 4 I.@E.~ |. > each pp
+
+   closes I.@E.~ |. each pp
+
+   closes I.@E.~ |. each pp
+
+   |. each pp
++--------+------+--+---------+--+--+---------+--+--+----+
+|}}]])})]|)}>]})|_1|}}>}>))))|_1|_1|]]}}]}]}>|_1|_1|])}>|
++--------+------+--+---------+--+--+---------+--+--+----+
+   '}}]])})]' I.@E. closes
+
+   closes
+)]}>
+   '}}]])})]' e. closes
+1 1 1 1 1 1 1 1
+   '}}]])})]' i. closes
+4 2 0 8
+   '}}]])})]' I. closes
+6 2 0 6
+   '}}]])})]' I.@E. closes
+
+   '}}]])})]' I.&E. closes
+|length error
+|   '}}]])})]'    I.&E.closes
+   '}}]])})]' E.@I. closes
+|domain error
+|   '}}]])})]'    E.@I.closes
+   closes I.@E.  '}}]])})]'
+
+   '}' I.@E. closes
+2
+   '}}]])})]' I.@E./ closes
+
+   '}}]])})]' (I.@E.)/ closes
+
+   '}}]])})]' E. closes
+0 0 0 0
+   '}}]])})]' =/ closes
+0 0 1 0
+0 0 1 0
+0 1 0 0
+0 1 0 0
+1 0 0 0
+0 0 1 0
+1 0 0 0
+0 1 0 0
+   ('}}]])})]' =/ closes) (*"1) 1 + i. 4 
+0 0 3 0
+0 0 3 0
+0 2 0 0
+0 2 0 0
+1 0 0 0
+0 0 3 0
+1 0 0 0
+0 2 0 0
+   I."1 ('}}]])})]' =/ closes) (*"1) 1 + i. 4 
+2 2 2
+2 2 2
+1 1 0
+1 1 0
+0 0 0
+2 2 2
+0 0 0
+1 1 0
+   I."1 ('}}]])})]' =/ closes)
+2
+2
+1
+1
+0
+2
+0
+1
+   , I."1 ('}}]])})]' =/ closes)
+2 2 1 1 0 2 0 1
+   1 + , I."1 ('}}]])})]' =/ closes)
+3 3 2 2 1 3 1 2
+   closes
+)]}>
+   '}}]])})]' (I.@E.)"0 closes
+|length error
+|   '}}]])})]'    (I.@E.)"0 closes
+   '}}]])})]' (I.@E.)"1 closes
+
+   '}}]])})]' I.@E."1 closes
+
+   '}' I.@E. closes
+2
+   closes
+)]}>
+   'aaabc' e. 'abc'
+1 1 1 1 1
+   'aaabc' i. 'abc'
+0 3 4
+   'abc' i. 'aaabc'
+0 0 0 1 2
+   closes i. '}}]])})]'
+2 2 1 1 0 2 0 1
+   closes i. '}}]])})]>>'
+2 2 1 1 0 2 0 1 3 3
+   1 + closes i. '}}]])})]>>'
+3 3 2 2 1 3 1 2 4 4
+   
+parse3 =: 3 : 0
+  stack =. 0 $ 0
+  string =. y
+  while. 0 < # string
+  NB. while string is nonempty
+  do.
+    c =. (0 { string)
+    if. c e. opens
+    NB. found an open-delimiter
+    do.
+      NB. save its complement on the stack
+      stack =. stack , open_to_close c
+    elseif. c e. closes
+    do.
+      if. ({: stack) = c
+      do.
+	 NB. close-delimiter matches innermost open-delimiter
+	 NB. so we pop it off the stack and continue
+         stack =. }: stack
+	 NB. pop stack
+      else.
+	NB. we found a bad character
+	NB. return _1
+        _1 return.
+      end.
+    end.
+    string =. }. string
+  end.
+  if. 0 = # stack
+  do.
+    0 return.  NB. string is empty, stack is empty: correct parse
+  else.
+    NB. string is empty but stack is nonempty; incomplete string
+    scores =: 1 + closes i. (|. stack)
+    (5 #~ $ scores) #. scores
+    stack return.
+  end.
+)
+
+
+
+parse3 =: 3 : 0
+  stack =. 0 $ 0
+  string =. y
+  while. 0 < # string
+  NB. while string is nonempty
+  do.
+    c =. (0 { string)
+    if. c e. opens
+    NB. found an open-delimiter
+    do.
+      NB. save its complement on the stack
+      stack =. stack , open_to_close c
+    elseif. c e. closes
+    do.
+      if. ({: stack) = c
+      do.
+	 NB. close-delimiter matches innermost open-delimiter
+	 NB. so we pop it off the stack and continue
+         stack =. }: stack
+	 NB. pop stack
+      else.
+	NB. we found a bad character
+	NB. return _1
+        _1 return.
+         end.
+    end.
+    string =. }. string
+  end.
+  if. 0 = # stack
+  do.
+    0 return.  NB. string is empty, stack is empty: correct parse
+  else.
+    NB. string is empty but stack is nonempty; incomplete string
+    scores =: 1 + closes i. (|. stack)
+    (5 #~ $ scores) #. scores
+    stack return.
+  end.
+)
+
+
+         
+   parse3 each strings
++--------+------+--+---------+--+--+---------+--+--+----+
+|])})]]}}|)}]>})|_1|))))>}>}}|_1|_1|>}]}]}}]]|_1|_1|>})]|
++--------+------+--+---------+--+--+---------+--+--+----+
+   
+parse3 =: 3 : 0
+  stack =. 0 $ 0
+  string =. y
+  while. 0 < # string
+  NB. while string is nonempty
+  do.
+    c =. (0 { string)
+    if. c e. opens
+    NB. found an open-delimiter
+    do.
+      NB. save its complement on the stack
+      stack =. stack , open_to_close c
+    elseif. c e. closes
+    do.
+      if. ({: stack) = c
+      do.
+	 NB. close-delimiter matches innermost open-delimiter
+	 NB. so we pop it off the stack and continue
+         stack =. }: stack
+	 NB. pop stack
+      else.
+	NB. we found a bad character
+	NB. return _1
+        0 return.
+      end.
+    end.
+    string =. }. string
+  end.
+  if. 0 = # stack
+  do.
+    _1 return.  NB. string is empty, stack is empty: correct parse
+  else.
+    NB. string is empty but stack is nonempty; incomplete string
+    scores =: 1 + closes i. (|. stack)
+    (5 #~ $ scores) #. scores return.
+  end.
+)
+
+
+
+parse3 =: 3 : 0
+  stack =. 0 $ 0
+  string =. y
+  while. 0 < # string
+  NB. while string is nonempty
+  do.
+    c =. (0 { string)
+    if. c e. opens
+    NB. found an open-delimiter
+    do.
+      NB. save its complement on the stack
+      stack =. stack , open_to_close c
+    elseif. c e. closes
+    do.
+      if. ({: stack) = c
+      do.
+	 NB. close-delimiter matches innermost open-delimiter
+	 NB. so we pop it off the stack and continue
+         stack =. }: stack
+	 NB. pop stack
+         else.
+	NB. we found a bad character
+	NB. return _1
+        0 return.
+      end.
+    end.
+    string =. }. string
+  end.
+  if. 0 = # stack
+  do.
+    _1 return.  NB. string is empty, stack is empty: correct parse
+  else.
+    NB. string is empty but stack is nonempty; incomplete string
+    scores =: 1 + closes i. (|. stack)
+    (5 #~ $ scores) #. scores return.
+  end.
+)
+
+
+         
+   parse3 each strings
++------+----+-+-------+-+-+------+-+-+---+
+|288957|5566|0|1480781|0|0|995444|0|0|294|
++------+----+-+-------+-+-+------+-+-+---+
+   +/ > parse3 each strings
+2771042
+   strings
++------------------------+----------------------+------------------------+-----------------------+----------------------+-----------------------+-----------------------+----------------------+----------------------+------------------------+
+|[({(<(())[]>[[{[]{<()<>>|[(()[<>])]({[<{<<[]>>(|{([(<{}[<>[]}>{[]{[(<()>|(((({<>}<{<{<>}{[]{[]{}|[[<[([]))<([[{}[[()]]]|[{[{({}]{}}([{[{{{}}([]|{<[[]]>}<{[{[{[]{()[[[]|[<(<(<(<{}))><([]([]()|<{([([[(<>()){}]>(<<{{|<{([{{}}[<[[[<>{}]]]>[]]|
++------------------------+----------------------+------------------------+-----------------------+----------------------+-----------------------+-----------------------+----------------------+----------------------+------------------------+
+   +/ > parse3 each strings
+2771042
+   ans2 strings
+|value error: ans2
+|       ans2 strings
+   ans2 t
+|value error: ans2
+|       ans2 t
+   ans
+ans2 =: 3 : 0
+  strings =: }: LF splitstring y
+  a =: , > parse3 each strings
+  (0 < a) # a
+)
+
+
+|value error: ans
+            
+   ans2 t
+288957 5566 1480781 995444 294
+   /:~ ans2 t
+294 5566 288957 995444 1480781
+   /:~ ans2 t
+294 5566 288957 995444 1480781
+   5 % 2
+2.5
+   <. 5 % 2
+2
+   ans2 t
+288957 5566 1480781 995444 294
+   
+ans2 =: 3 : 0
+  strings =: }: LF splitstring y
+  a =: , > parse3 each strings
+  sl =: (0 < a) # a
+  (<. ($ sl) % 2) { /: sl
+)
+
+
+            
+   ans2 t
+0
+   sl
+288957 5566 1480781 995444 294
+   /: sl
+4 1 0 3 2
+   /:~ sl
+294 5566 288957 995444 1480781
+   /:~ sl
+ans2 =: 3 : 0
+  strings =: }: LF splitstring y
+  a =: , > parse3 each strings
+  sl =: (0 < a) # a
+  (<. ($ sl) % 2) { /:~ sl
+)
+
+
+294 5566 288957 995444 1480781
+            
+   ans2 t
+288957
+   ans2 i
+3404870164
+   
