@@ -43,4 +43,101 @@ complete the graph downstream by taking powers of the matrix.
     3     0  0  0  0  2  0  0  9  0
     etc.
 
+----------------------------------------------------------------------
 
+I think it's a little iterative.  Let's get going with just the
+parsing part.
+
+Once we have the adjacency matrix, though, we can answer the question
+like this:
+
+We start by getting the row number for "shiny gold", which says which
+bags a shiny gold bag can contain.
+
+Then we take that column: those are all the bag types that can contain
+a shiny gold.
+
+Then we grab all those columns, and merge them as a set; those are all
+the bag types that can contain a bag that contains shiny gold.
+
+And we keep doing that until the set stops changing.
+
+----------------------------------------------------------------------
+
+re-learning: rxmatch returns an array of pairs
+
+the zeroth pair is the coordinates (start/stop) of the entire match of
+the regexp
+
+the oneth pair is the coords of the match of the first RE paren group
+
+----------------------------------------------------------------------
+
+re-learning:    DATA i. ITEM finds first occurrence of ITEM in DATA.
+i.e. the usual order would be 'grep X FILE' but this is J so it's
+easier to say "FILE grep X".
+
+----------------------------------------------------------------------
+
+Parsing the lines:
+
+take the part after "contains "
+
+split into words
+
+if the length is 3, it says "no other bags" so return zeroes
+
+if the length is a multiple of 4:
+reshape to 4 columns, drop the last column,
+paste the last two columns together with a space
+      turning e.g.  'shiny' 'blue' into 'shiny blue'
+look up the list of bags in bagnames, getting bag numbers
+
+   ,.  bagnames
++------------+
+|light red   |
++------------+
+|dark orange |
++------------+
+|bright white|
++------------+
+|muted yellow|
++------------+
+|shiny gold  |
++------------+
+|dark olive  |
++------------+
+|vibrant plum|
++------------+
+|faded blue  |
++------------+
+|dotted black|
++------------+
+   p
+dark orange bags contain 3 bright white bags, 4 muted yellow bags.
+
+dargk orange is 1
+bright white is 2
+muted uellow is 3
+
+there are 9 bag types
+  0 0 0 0 0 0 0 0 0
+
+so the row for p is row 1 of the final matrix:
+and its contents are
+
+  0 0 3 4 0 0 0 0 0 
+
+In fact at this stage we probably don't care about the numbers, but I
+bet part 2 will involve them so I will still parse them.
+
+Looking up in bagnames:
+
+   bagnames i. < 'shiny gold'
+4
+
+
+If the graph matrix is "gm", then I can just work with the nonzero
+elements:
+
+0 -: 
