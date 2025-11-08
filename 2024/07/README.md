@@ -84,3 +84,62 @@ r =: 4 : 0
    2 ncatl 2 3 4
 22 23 24
 ```
+
+## Thu Nov  6 22:47:11 2025
+
+My J answer is wrong, but it works right on the sample.
+
+I wrote a version in Python but it gives a different answer for part
+1, so now I need to compare them.
+
+Hope they both have different bugs.
+
+
+boyd@x2:~/Code/adventJ/2024/07$ diff r_out a_out
+78a79
+> 68857737007
+173a175
+> 4545435
+282a285
+> 335703
+362a366
+> 1713601
+384a389
+> 81237744
+480a486
+> 38546921
+484a491
+> 99444997
+
+
+61561126043536
+
+6392014827024
+
+
+boyd@x2:~/Code/adventJ/2024/07$ diff j_out r_out
+6d5
+< 29455065878420
+9a9
+> 687057312
+238a239
+> 14013920
+364d364
+< 174658079389533
+527d526
+< 93344925312638
+
+"<" means numbers J found that r didn't
+">" means numbers J missed that r found
+
+We're guessing that r is correct.
+
+Let's debug each of those in turn.
+
+First let's get those lines from the input.
+
+29455065878420
+687057312
+14013920
+174658079389533
+93344925312638

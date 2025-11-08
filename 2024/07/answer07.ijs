@@ -1,6 +1,7 @@
 readfile =: 1!:1
 load 'strings'
 load 'regex'
+load 'files'
 
 NB. starting problem 7
 NB. probably recursion: given a list of numbers, give the possible
@@ -65,18 +66,31 @@ answer2 =: 3 : 0
 )
 
 f2 =: 3 : 0
-  head =: {. y
-  tail =: }. y
-  concats =: nconcat tail
-  head e. ; (r/ @: |.) each concats
+  ({. y) e. r2/ |. }. y
 )
- f2 3456 3 4 5 6
-answer2 sample
 
 ncatl =: 4 : 0
-  y + x * 10 ^ >: <. 10 ^. x
+  x: y + x * 10 ^ 1 >. >. 10 ^. y
 )
 
 r2 =: 4 : 0
-  (x + y) , (x * y) , y ncatl x
+  X =. x: x
+  Y =. x: y
+  (X + Y) , (X * Y) , Y ncatl X
 )
+
+answercheck =: 4 : 0
+  mask =. > f2 each y
+  firsts =. > {. each y
+  nums =. mask # firsts
+  rnums =. ((# nums), 1) $ nums
+  (": rnums) fwrites x
+)
+
+f2 29455065878420 91 952 54 67 34 419
+
+r2/ x: (91 952 54 67 34 419)
+
+answer2 sample
+
+answer2 data
